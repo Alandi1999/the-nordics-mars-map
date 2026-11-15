@@ -7,7 +7,7 @@ y cada dato muestra su fuente, fecha y nivel de confianza (insignia «T1 · …�
 ```
 npm install
 npm run dev        # desarrollo
-npm test           # 44 tests (terreno, rutas, blindaje, efemérides, datos)
+npm test           # 58 tests (terreno, rutas, blindaje, efemérides, datos, clima simulado)
 npm run build && npm run preview   # versión con service worker (modo offline)
 ```
 
@@ -19,6 +19,7 @@ npm run build && npm run preview   # versión con service worker (modo offline)
 | Trayectoria y waypoints de Curiosity (sol 5073) y Perseverance (sol 2022) | Alertas de clima espacial (esquema DONKI, valores inventados) |
 | Distancia y latencia Tierra–Marte (validadas con JPL Horizons) | Tarjeta de protocolo, simulador de eventos, guantelete, IA médica |
 | Línea base de radiación RAD en Gale | Parámetros de movilidad (supuestos sin calibrar) |
+| | Clima de superficie (temperatura y presión): serie inventada, no REMS ni MEDA |
 
 Los datos de un sitio nunca se muestran sobre el otro.
 
@@ -36,3 +37,5 @@ Los datos de un sitio nunca se muestran sobre el otro.
 - Sin calibración con Jezero: los umbrales de movilidad figuran como «supuestos sin validar».
 - Trek solo tiene tiles hasta el nivel 7 (≈ 325 m/px): la imagen base es borrosa a escala de caminata.
 - Contenido de salud: varias entradas siguen «pendientes de fuente» y están etiquetadas así.
+- El panel de clima (F3) usa una serie inventada, marcada «ESTIMADO»; no hay datos de REMS ni de MEDA.
+- El proyecto usa npm (`package-lock.json`); un `pnpm-lock.yaml` local está ignorado en git.

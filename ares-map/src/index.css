@@ -127,7 +127,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .gsub { font-size: 0.72rem; color: var(--muted); }
 .gfoot { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6px; margin-top: 6px; }
 /* Mission UI: touch targets >= 48 px */
-.panel button, .panel select, .panel input[type='date'], .panel input[type='text'] { min-height: 48px; }
+.panel button, .panel select, .panel input[type='date'], .panel input[type='text'], .panel input[type='range'] { min-height: 48px; }
 .mini { min-height: 48px; min-width: 48px; }
 /* Touch targets: at least 48 px in both directions (spec F12) */
 .tabs button { min-width: 48px; }

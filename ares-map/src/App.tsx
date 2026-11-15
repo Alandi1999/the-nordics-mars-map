@@ -9,6 +9,8 @@ import { prefetchTiles, tileUrlsFor, type PrefetchResult } from './lib/offline';
 import { CrewSection } from './ui/CrewPanel';
 import { PoiSection } from './ui/PoiPanel';
 import { GloveSection, type GloveView } from './ui/GlovePanel';
+import { WeatherSection } from './ui/WeatherPanel';
+import { generateWeather } from './lib/weather';
 import { DEFAULT_MOBILITY, type MobilityConfig } from './config/mobility';
 import { DataBadge } from './ui/DataBadge';
 import { metersPerDegreeLon } from './lib/mars';
@@ -33,11 +35,12 @@ import sample from './data/spaceweather.sample.json';
 
 const EVENTS = sample.events as SpaceWeatherEvent[];
 
-type Tab = 'map' | 'poi' | 'terrain' | 'route' | 'safety' | 'crew' | 'link' | 'glove';
+type Tab = 'map' | 'poi' | 'terrain' | 'weather' | 'route' | 'safety' | 'crew' | 'link' | 'glove';
 const TABS: { id: Tab; label: string }[] = [
   { id: 'map', label: 'Mapa' },
   { id: 'poi', label: 'Puntos' },
   { id: 'terrain', label: 'Terreno' },
+  { id: 'weather', label: 'Clima' },
   { id: 'route', label: 'Ruta' },
   { id: 'safety', label: 'Seguridad' },
   { id: 'crew', label: 'Equipo' },
@@ -116,6 +119,18 @@ export default function App() {
     () => (showPois ? pois.filter((p) => p.kind !== 'shelter').map((p) => ({ id: p.id, coord: p.lonlat, kind: p.kind })) : []),
     [showPois, pois],
   );
+
+  // --- mocked surface weather (spec F3)
+  const weather = useMemo(() => generateWeather(siteId), [siteId]);
+  const showThemis = (kind: 'day' | 'night') => {
+    setLayers((s) => ({
+      ...s,
+      'themis-day': { ...s['themis-day'], visible: kind === 'day' },
+      'themis-night': { ...s['themis-night'], visible: kind === 'night' },
+    }));
+    setTab('map');
+    if (isMobile) setCollapsed(true); // on phones, hide the panel so the thermal imagery is visible
+  };
 
   // --- offline preparation
   const [offline, setOffline] = useState<{ running: boolean; result: PrefetchResult | null; error: string | null }>({ running: false, result: null, error: null });
@@ -456,6 +471,8 @@ export default function App() {
             <ProbeSection probe={probe} onClear={() => setClicked(null)} />
           </>
         )}
+
+        {tab === 'weather' && <WeatherSection key={siteId} series={weather} onThemis={showThemis} />}
 
         {tab === 'route' && (
           <>

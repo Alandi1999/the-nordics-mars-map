@@ -14,6 +14,7 @@ Abrir la app, pestaña **Mapa** → **Preparar modo offline** (≈ 120 imágenes
 | 0:00 | Enlace | Latencia de hoy y el gráfico 2025–2030. Mover el slider «sin respuesta». | «Entre 3 y 22 min por sentido: la Tierra no puede guiar una caminata.» |
 | 0:25 | Mapa / Puntos | Gale con la trayectoria real de Curiosity (hasta sol 5073). Clic en un waypoint: ficha con fuente y fecha. | «Datos reales de NASA; cada dato dice de dónde viene y qué tan confiable es.» |
 | 0:50 | Terreno | Pendiente, mapa de costo; mover los umbrales y ver el mapa recalcularse. Clic para sondear. | «El terreno del AOI es ilustrativo, y la app lo avisa.» |
+| ~0:55 (opcional, 10 s) | Clima | Ciclo de temperatura y presión de un sol y el botón «Ver THEMIS de noche». | «Esta serie es inventada y está marcada; las capas térmicas THEMIS sí son reales.» |
 | 1:15 | Ruta | **Ruta de ejemplo**: tres rutas (corta, segura, con refugio) y su perfil de elevación. | «El mejor camino no siempre es el más corto.» |
 | 1:40 | Seguridad | Activar blindaje; simular un evento. Con A en el extremo SO, **moderado** da CÓDIGO ROJO (ningún refugio llega a tiempo, margen −28 min) y **menor** da verde. Tarjeta: código, cuenta regresiva, refugio y margen. | «Una alerta solar se traduce en una acción concreta.» |
 | 2:05 | Ruta | **Reportar peligro** sobre la ruta; la ruta se recalcula sola. | «Si el terreno cambia, el plan cambia sin esperar a la Tierra.» |
