@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/link", "crates/satellite", "crates/hub"]
+# firmware/glove is target-specific (ESP32-C3, no_std); built separately.
+exclude = ["firmware/glove"]
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"

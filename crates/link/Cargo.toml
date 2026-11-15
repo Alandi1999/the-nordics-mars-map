@@ -1,0 +1,8 @@
+[package]
+name = "nasamars-link"
+edition.workspace = true
+version.workspace = true
+description = "Std-side outbound link queue shared by satellite and hub"
+
+[dependencies]
+nasamars-core = { path = "../core" }

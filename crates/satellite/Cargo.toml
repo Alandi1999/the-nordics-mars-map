@@ -1,0 +1,8 @@
+[package]
+name = "nasamars-satellite"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+nasamars-core = { path = "../core" }
+nasamars-link = { path = "../link" }
