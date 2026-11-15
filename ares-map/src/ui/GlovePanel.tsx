@@ -9,7 +9,7 @@ export const GLOVE_META: DataMeta = {
   tier: 1,
   confidence: 'estimated',
   shelfLife: 'fast',
-  notes: 'No existe un GPS marciano. La posición es simulada: posición del punto A más un error configurable. Solo lo esencial: alerta, rumbo, distancia y enlace.',
+  notes: 'No existe un GPS marciano. La posición es simulada: posición del punto A (o el centro del AOI si no hay A) más un error configurable. Solo lo esencial: alerta, rumbo, distancia y enlace.',
 };
 
 export interface GloveView {
@@ -65,7 +65,7 @@ export function GloveSection({ view, noiseM, onNoise }: { view: GloveView; noise
         <input type="range" min={0} max={300} step={10} value={noiseM} onChange={(e) => onNoise(Number(e.target.value))} />
         <output>±{noiseM} m</output>
       </label>
-      <p className="muted">Pensado para manos enguantadas: pocas palabras, números grandes, código por color + forma + texto. El guantelete lleva solo mapa y alertas; el cálculo pesado corre en el satélite y el hub.</p>
+      <p className="muted">Pensado para manos enguantadas: pocas palabras, números grandes, código por color + forma + texto. En el concepto, el guantelete lleva solo mapa y alertas y el cálculo pesado correría en el satélite y el hub; en este prototipo todo se calcula en el navegador.</p>
       <DataBadge meta={GLOVE_META} />
     </section>
   );

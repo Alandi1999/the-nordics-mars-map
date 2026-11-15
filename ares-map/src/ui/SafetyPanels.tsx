@@ -8,6 +8,16 @@ import { RAD_GALE_MSV_PER_DAY } from '../terrain/shielding';
 import type { SiteId } from '../config/sites';
 import { DataBadge } from './DataBadge';
 
+export const SHIELD_META: DataMeta = {
+  source: 'Blindaje geométrico del terreno ilustrativo (sky-view factor), cálculo del equipo',
+  acquiredAt: 'Calculado en el navegador',
+  retrievedAt: PROBE_DATE,
+  tier: 1,
+  confidence: 'estimated',
+  shelfLife: 'slow',
+  notes: 'Modelo simplificado: dosis relativa = máx(0,25; cielo visible). No es transporte de radiación y el terreno de base es ilustrativo.',
+};
+
 export const SHELTER_META: DataMeta = {
   source: 'Sitios candidatos calculados del blindaje estimado (no relevados)',
   acquiredAt: 'Calculado en el navegador',
@@ -70,7 +80,7 @@ export function SheltersSection({ shelters, siteId }: { shelters: Shelter[]; sit
           {shelters.map((s) => (
             <li key={s.id}>
               <strong>{s.id}</strong> · dosis relativa {s.doseRelative.toFixed(2)}
-              {siteId === 'gale' && ` ≈ ${(s.doseRelative * RAD_GALE_MSV_PER_DAY).toFixed(2)} mSv/día`}
+              {siteId === 'gale' && ` ≈ ${(s.doseRelative * RAD_GALE_MSV_PER_DAY).toFixed(1)} mSv/día`}
             </li>
           ))}
         </ul>
@@ -157,7 +167,7 @@ export function ProtocolCard({ sim, assessment, shelter, walkMin, walkDistM, dos
         <dd>
           Dosis ×{e.doseMultiplier} sobre la base (supuesto).{' '}
           {siteId === 'gale'
-            ? `Aquí ≈ ${(doseHere * RAD_GALE_MSV_PER_DAY * e.doseMultiplier).toFixed(2)} mSv/día (estimado).`
+            ? `Aquí ≈ ${(doseHere * RAD_GALE_MSV_PER_DAY * e.doseMultiplier).toFixed(1)} mSv/día (orden de magnitud, estimado).`
             : `Dosis relativa aquí ${doseHere.toFixed(2)}.`}
         </dd>
         <dt>3 · Acción</dt>

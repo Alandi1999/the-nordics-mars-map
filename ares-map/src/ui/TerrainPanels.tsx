@@ -12,7 +12,7 @@ export const TERRAIN_META: DataMeta = {
   confidence: 'estimated',
   shelfLife: 'slow',
   notes:
-    'Elevación sintética (ruido + montaña + escarpe) con la altitud base de la spec. Sustituir por DTM HiRISE/HRSC del AOI en la versión real.',
+    'Relieve sintético (ruido + montaña + escarpe) anclado a la elevación medida de un waypoint real del rover; el resto de las alturas es inventado. Sustituir por DTM HiRISE/HRSC del AOI en la versión real.',
 };
 
 export interface OverlayState {
@@ -179,7 +179,7 @@ export function ProbeSection({ probe, onClear }: { probe: Probe | null | undefin
             <dt>Pendiente</dt><dd>{probe.slopeDeg.toFixed(1)}°</dd>
             <dt>Aspecto (cae hacia)</dt><dd>{probe.slopeDeg < 0.5 ? '— (llano)' : `${probe.aspectDeg.toFixed(0)}° ${compass(probe.aspectDeg)}`}</dd>
             <dt>Rugosidad</dt><dd>{probe.roughnessDeg.toFixed(2)}° (proxy)</dd>
-            <dt>Dosis relativa</dt><dd>{probe.doseRelative.toFixed(2)} ≈ {probe.doseMsvDay === null ? 'sin dato RAD en este sitio' : `${probe.doseMsvDay.toFixed(2)} mSv/día`} (estimado)</dd>
+            <dt>Dosis relativa</dt><dd>{probe.doseRelative.toFixed(2)} ≈ {probe.doseMsvDay === null ? 'sin dato RAD en este sitio' : `${probe.doseMsvDay.toFixed(1)} mSv/día`} (estimado)</dd>
             <dt>Clase</dt><dd>{CLASS_NAME[probe.cls]}</dd>
             <dt>Costo</dt><dd>{Number.isFinite(probe.costMultiplier) ? `×${probe.costMultiplier.toFixed(2)}` : 'intransitable'}</dd>
           </dl>

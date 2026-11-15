@@ -7,7 +7,7 @@ describe('offline tile list', () => {
     it(`${site.id}: lists unique, bounded tile URLs from the two verified servers`, () => {
       const urls = tileUrlsFor(site);
       expect(urls.length).toBeGreaterThan(20);
-      expect(urls.length).toBeLessThanOrEqual(5 * 30);
+      expect(urls.length).toBeLessThanOrEqual(5 * 2 * 40);
       expect(new Set(urls).size).toBe(urls.length);
       for (const u of urls) expect(u).toMatch(/^https:\/\/(trek\.nasa\.gov\/tiles\/Mars\/EQ\/Mars_Viking|planetarymaps\.usgs\.gov\/cgi-bin\/mapserv)/);
       const trek = urls.filter((u) => u.includes('trek.nasa.gov'));

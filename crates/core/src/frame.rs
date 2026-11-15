@@ -160,16 +160,32 @@ mod tests {
         let mut buf = [0u8; 64];
         let frame = encode(&Message::Event(event()), &mut buf).unwrap();
         let n = frame.len();
-        // Flip one bit in every non-delimiter, non-code position: none may decode.
-        for i in 1..n - 1 {
+        // Flip one bit in every position except the final 0x00 delimiter: none may decode.
+        for i in 0..n - 1 {
             let mut bad = [0u8; 64];
             bad[..n].copy_from_slice(frame);
             bad[i] ^= 0x01;
-            if bad[i] == 0 {
-                continue; // would split the frame; covered by truncation
-            }
             assert!(decode(&mut bad[..n]).is_err(), "flip at {i} was accepted");
         }
+    }
+
+    /// The satellite demo uses toy timestamps (21 B alert, 10 B contact). Real UTC epoch seconds
+    /// are 5-byte varints, so real frames are larger: measured 32 B and 17 B. A real alert
+    /// therefore never fits in one default BLE notification (20 useful bytes).
+    #[test]
+    fn real_epoch_timestamps_make_frames_larger_than_the_demo_ones() {
+        let mut buf = [0u8; 64];
+        let mut ev = event();
+        ev.issued_at = 1_780_000_000;
+        ev.arrival_start = 1_780_003_600;
+        ev.arrival_end = 1_780_010_000;
+        let alert = encode(&Message::Event(ev), &mut buf).unwrap().len();
+        assert_eq!(alert, 32);
+        assert!(alert > 20, "a real alert must not fit in 20 BLE bytes");
+        let toy = encode(&Message::Event(event()), &mut buf).unwrap().len();
+        assert!(toy < alert);
+        let contact = Message::Contact(ContactWindow { start: 1_780_000_000, end: 1_780_000_600 });
+        assert_eq!(encode(&contact, &mut buf).unwrap().len(), 17);
     }
 
     #[test]

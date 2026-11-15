@@ -28,6 +28,7 @@ export function healthMeta(i: HealthItem): DataMeta {
     tier: 1,
     confidence: i.confidence,
     shelfLife: 'medium',
+    tierNote: i.pendingSource ? 'Pendiente de fuente primaria (no verificado)' : undefined,
     notes: i.pendingSource
       ? 'PENDIENTE DE FUENTE: el contenido viene del board del equipo y falta citar una fuente primaria. No es consejo médico.'
       : 'No es consejo médico.',

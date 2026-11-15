@@ -59,11 +59,44 @@ export function circleRing(lon: number, lat: number, radiusM: number, steps = 40
 
 const KEY = 'ares-map.incidents.v1';
 
+const isNum = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+
+/** Keeps only well-formed incidents: stored data is untrusted and a bad entry must not crash the app. */
+export function parseIncidents(raw: unknown): Incident[] {
+  if (!Array.isArray(raw)) return [];
+  const out: Incident[] = [];
+  for (const e of raw as unknown[]) {
+    if (typeof e !== 'object' || e === null) continue;
+    const o = e as Record<string, unknown>;
+    const ll = o.lonlat;
+    if (
+      typeof o.id !== 'string' ||
+      (o.siteId !== 'gale' && o.siteId !== 'jezero') ||
+      typeof o.createdAt !== 'string' ||
+      !Array.isArray(ll) || ll.length !== 2 || !isNum(ll[0]) || !isNum(ll[1]) ||
+      !isNum(o.radiusM) || o.radiusM <= 0 || o.radiusM > 5000 ||
+      typeof o.type !== 'string' || !Object.prototype.hasOwnProperty.call(INCIDENT_LABEL, o.type) ||
+      typeof o.syncedToEarth !== 'boolean'
+    ) continue;
+    out.push({
+      id: o.id,
+      siteId: o.siteId,
+      createdAt: o.createdAt,
+      lonlat: [ll[0], ll[1]],
+      radiusM: o.radiusM,
+      type: o.type as IncidentType,
+      note: typeof o.note === 'string' ? o.note : undefined,
+      tier: 2,
+      syncedToEarth: o.syncedToEarth,
+    });
+  }
+  return out;
+}
+
 export function loadIncidents(): Incident[] {
   try {
     const raw = localStorage.getItem(KEY);
-    const parsed: unknown = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? (parsed as Incident[]) : [];
+    return parseIncidents(raw ? JSON.parse(raw) : []);
   } catch {
     return [];
   }

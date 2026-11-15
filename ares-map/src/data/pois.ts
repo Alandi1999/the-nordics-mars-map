@@ -77,7 +77,9 @@ export function roverPois(site: SiteId): Poi[] {
       whyItMatters_es: first
         ? 'Punto de partida de la trayectoria real; ancla de toda la ruta.'
         : current
-          ? 'Define la zona de trabajo actual y el centro del AOI de este prototipo.'
+          ? site === 'gale'
+            ? 'Define la zona de trabajo actual y el centro del AOI de este prototipo.'
+            : 'Última posición registrada del rover: hasta aquí llega la trayectoria real.'
           : 'Punto de la ruta real del rover: muestra por dónde ya se pudo transitar.',
       meta: base(w.sol),
     };

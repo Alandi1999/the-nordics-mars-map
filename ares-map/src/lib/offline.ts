@@ -6,7 +6,7 @@ import { LAYER_DEFS } from '../map/layers';
 import type { SiteConfig } from '../config/sites';
 
 export const TILE_CACHE = 'ares-tiles';
-const MAX_TILES_PER_LAYER = 30;
+const MAX_TILES_PER_LEVEL = 40;
 
 export interface PrefetchResult {
   total: number;
@@ -29,13 +29,13 @@ export function tileUrlsFor(site: SiteConfig): string[] {
     const grid = source.getTileGridForProjection(proj);
     const urlFn = source.getTileUrlFunction();
     const z0 = grid.getZForResolution(viewRes);
-    let count = 0;
     for (const z of [z0 - 1, z0]) {
+      let count = 0; // the cap applies per level so the finer level is never starved by the coarser one
       if (z < grid.getMinZoom() || z > grid.getMaxZoom()) continue;
       const range = grid.getTileRangeForExtentAndZ(extent, z);
       for (let x = range.minX; x <= range.maxX; x++) {
         for (let y = range.minY; y <= range.maxY; y++) {
-          if (count >= MAX_TILES_PER_LAYER) break;
+          if (count >= MAX_TILES_PER_LEVEL) break;
           const u = urlFn([z, x, y], 1, proj);
           if (u) {
             urls.push(u);
@@ -64,6 +64,8 @@ export async function prefetchTiles(
       try {
         const res = await fetch(url, { mode: 'cors' });
         if (!res.ok) throw new Error(String(res.status));
+        // A WMS error comes back as HTTP 200 XML: never cache that as a tile.
+        if (!(res.headers.get('content-type') ?? '').startsWith('image/')) throw new Error('not an image');
         await cache.put(url, res);
         result.done++;
       } catch {

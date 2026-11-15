@@ -2,6 +2,10 @@
 //! newest version of each item, and forwards alerts and route updates to the
 //! glove queue. Tile forwarding to the glove is not decided yet (the glove
 //! needs a tile-selection policy first), so tiles are only cached.
+//!
+//! Known limits of the dedup rules: contact windows carry no version, so a late stale window
+//! overwrites a newer one; and an event re-sent with the same `issued_at` but a changed status or
+//! severity is dropped as a duplicate.
 
 use std::collections::{HashMap, HashSet};
 

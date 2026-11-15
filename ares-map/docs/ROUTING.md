@@ -23,7 +23,7 @@ Three profiles differ only in the per-cell weight:
 |---|---|
 | Shortest | 1 (only no-go is avoided) |
 | Safest | `cost² · (1 + 0.5·class)` |
-| With nearby shelter | `cost · (1 + 2·doseRelative)` (prefers shielded terrain) |
+| With nearby shelter | `cost · (1 + 2·doseRelative)` (prefers shielded terrain; it does NOT force the route to pass near a shelter, each route reports its farthest distance to a shelter) |
 
 Each profile is optimal for its own weight (tested). The shelter profile trades distance for lower
 estimated dose; where terrain barely shields (e.g. Jezero) it can end up close to the others.

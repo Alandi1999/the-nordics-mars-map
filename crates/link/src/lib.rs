@@ -59,6 +59,10 @@ impl<const N: usize> Outbox<N> {
 /// Gates an `Outbox` by contact window and a per-window byte budget
 /// (`bytes_per_sec * window length`). Strict priority: if the most urgent
 /// frame does not fit in what is left, nothing less urgent jumps ahead of it.
+///
+/// A frame larger than the whole window budget can never be sent in this window, so it is
+/// DISCARDED (counted in `dropped_oversize`) instead of blocking the queue. This applies to any
+/// priority, alerts included; it is not kept for a later, longer window.
 pub struct Transmitter {
     window: Option<ContactWindow>,
     bytes_per_sec: u32,

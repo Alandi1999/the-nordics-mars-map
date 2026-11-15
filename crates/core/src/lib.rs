@@ -17,9 +17,9 @@ pub const CELL_METERS: u16 = 100;
 pub enum Priority {
     /// Solar events.
     Alert = 0,
-    /// POI, traverse cost and contact window changes.
+    /// POI and contact window changes.
     Route = 1,
-    /// Base layer deltas.
+    /// Base layer tiles, including traverse-cost tiles (`LayerId::TraverseCost`).
     Base = 2,
 }
 

@@ -26,7 +26,7 @@ import { doseRelative, skyViewFactor } from './terrain/shielding';
 import { MobilitySection, OVERLAY_IDS, ProbeSection, TerrainSection, type OverlayState } from './ui/TerrainPanels';
 import { RouteSection, type PickMode } from './ui/RoutePanel';
 import {
-  EventsSection, IncidentSection, LinkSection, ProtocolCard, SheltersSection,
+  EventsSection, IncidentSection, LinkSection, ProtocolCard, SheltersSection, SHIELD_META,
   type HazardForm, type Sim,
 } from './ui/SafetyPanels';
 import sample from './data/spaceweather.sample.json';
@@ -497,6 +497,7 @@ export default function App() {
                 />
               </div>
               <p className="muted">Más color = menos cielo visible = menor dosis relativa. Modelo simplificado, no transporte de radiación.</p>
+              <DataBadge meta={SHIELD_META} />
             </section>
             <SheltersSection shelters={shelters} siteId={siteId} />
             <EventsSection

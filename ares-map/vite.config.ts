@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -14,6 +15,8 @@ const tileCache = (name: string, pattern: RegExp) => ({
 
 // https://vite.dev/config/
 export default defineConfig({
+  // The terrain/shielding tests simulate a 512x512 grid per site and can take several seconds.
+  test: { testTimeout: 30_000 },
   plugins: [
     react(),
     VitePWA({

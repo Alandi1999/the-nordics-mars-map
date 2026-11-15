@@ -11,8 +11,8 @@ type Priority uint8
 
 const (
 	PriorityAlert Priority = iota // solar events
-	PriorityRoute                 // POI, traverse cost, contact windows
-	PriorityBase                  // base layer deltas
+	PriorityRoute                 // POI and contact windows
+	PriorityBase                  // base layer tiles, including traverse-cost tiles
 )
 
 type LayerID uint8

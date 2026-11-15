@@ -117,3 +117,21 @@ describe('probe dose is site-aware (D7)', () => {
     }
   });
 });
+
+describe('terrain is anchored to a real measured elevation', () => {
+  it('the DEM reproduces the anchor waypoint elevation, so probe and POI card agree there', () => {
+    for (const site of Object.values(SITES)) {
+      const g = generateTerrain(site);
+      expect(g.anchor, site.id).toBeDefined();
+      const cell = cellAt(g, g.anchor!.lon, g.anchor!.lat);
+      expect(cell, `${site.id} anchor inside the AOI`).not.toBeNull();
+      expect(Math.abs(g.dem[cell!.r * g.size + cell!.c] - g.anchor!.elevationM)).toBeLessThan(0.5);
+    }
+  });
+
+  it('Gale anchor is the last known Curiosity position (sol 5073, about -3472 m)', () => {
+    const a = generateTerrain(SITES.gale).anchor!;
+    expect(a.sol).toBe(5073);
+    expect(a.elevationM).toBeCloseTo(-3472.1, 1);
+  });
+});

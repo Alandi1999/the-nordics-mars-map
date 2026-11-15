@@ -12,6 +12,8 @@ export interface DataMeta {
   tier: Tier;
   confidence: Confidence;
   shelfLife: ShelfLife;
+  /** Overrides the tier label when the data is not "previous scientific data" (e.g. pending a source). */
+  tierNote?: string;
   notes?: string;
 }
 

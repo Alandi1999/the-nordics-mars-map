@@ -24,7 +24,14 @@ export function DataBadge({ meta }: { meta: DataMeta }) {
         <dt>Descargado</dt>
         <dd>{meta.retrievedAt}</dd>
         <dt>Nivel</dt>
-        <dd>{TIER_LABEL[meta.tier]}</dd>
+        <dd>
+          {meta.tierNote ??
+            (meta.confidence !== 'estimated'
+              ? TIER_LABEL[meta.tier]
+              : meta.tier === 3
+                ? `${TIER_LABEL[3]} (muestra ilustrativa, valores inventados)`
+                : 'Estimación del equipo (no es dato científico previo)')}
+        </dd>
         <dt>Confianza</dt>
         <dd>{CONFIDENCE_LABEL[meta.confidence]}</dd>
         <dt>Vigencia</dt>

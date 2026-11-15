@@ -1,4 +1,5 @@
-// Command earth ingests DONKI/MOLA/HiRISE data and precomputes layers.
+// Command earth is a placeholder for the Earth-side ingest. It is not implemented yet:
+// it only prints the layer constants shared with the Rust core.
 package main
 
 import (

@@ -10,7 +10,7 @@ export type RouteProfile = 'shortest' | 'safe' | 'shelter';
 export const PROFILE_INFO: Record<RouteProfile, { label: string; color: string; hint: string }> = {
   shortest: { label: 'Más corta', color: '#38bdf8', hint: 'Solo evita lo prohibido; ignora el esfuerzo.' },
   safe: { label: 'Más segura', color: '#4ade80', hint: 'Penaliza fuerte pendientes y rugosidad.' },
-  shelter: { label: 'Con refugio cercano', color: '#fbbf24', hint: 'Prefiere terreno blindado (menor dosis relativa) y pasa cerca de refugios.' },
+  shelter: { label: 'Con refugio cercano', color: '#fbbf24', hint: 'Prefiere terreno blindado (menor dosis relativa). No garantiza pasar cerca de un refugio: mirá «refugio más lejano» en cada ruta.' },
 };
 
 export interface RouteStats {

@@ -1,4 +1,5 @@
-//! Relay satellite core: layer replica, priority queue, delta distribution.
+//! Demo of the satellite outbound path: enqueues sample messages and prints the frame sizes in
+//! send order. A layer replica and delta distribution are not implemented yet.
 use nasamars_core::frame::Message;
 use nasamars_core::{ContactWindow, EventKind, EventStatus, LayerId, SolarEvent, TileHeader, TileId};
 use nasamars_link::{Outbox, Transmitter};
