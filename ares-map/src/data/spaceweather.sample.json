@@ -1,0 +1,36 @@
+{
+  "_comment": "ILLUSTRATIVE sample. Field names follow DONKI WSA-ENLIL entries (impactList with location 'Mars'); values are invented for the demo. Replace with a real snapshot via scripts/snapshot_donki.mjs.",
+  "retrievedAt": "2026-11-15",
+  "events": [
+    {
+      "simulationID": "SAMPLE/minor/1",
+      "modelCompletionTime": "2026-11-15T08:00Z",
+      "impact": { "location": "Mars", "arrivalTime": "2026-11-15T12:00Z", "isGlancingBlow": true, "isMinorImpact": false },
+      "cme": { "speed": 620, "halfAngle": 28 },
+      "doseMultiplier": 1.3,
+      "etaMin": 240,
+      "severity": "minor",
+      "title_es": "CME de impacto rasante (menor)"
+    },
+    {
+      "simulationID": "SAMPLE/moderate/1",
+      "modelCompletionTime": "2026-11-15T08:00Z",
+      "impact": { "location": "Mars", "arrivalTime": "2026-11-15T09:30Z", "isGlancingBlow": false, "isMinorImpact": true },
+      "cme": { "speed": 940, "halfAngle": 38 },
+      "doseMultiplier": 2.5,
+      "etaMin": 90,
+      "severity": "moderate",
+      "title_es": "CME con impacto menor (moderado)"
+    },
+    {
+      "simulationID": "SAMPLE/severe/1",
+      "modelCompletionTime": "2026-11-15T08:00Z",
+      "impact": { "location": "Mars", "arrivalTime": "2026-11-15T08:35Z", "isGlancingBlow": false, "isMinorImpact": false },
+      "cme": { "speed": 1650, "halfAngle": 55 },
+      "doseMultiplier": 6,
+      "etaMin": 35,
+      "severity": "severe",
+      "title_es": "CME rápido, impacto directo (severo)"
+    }
+  ]
+}
