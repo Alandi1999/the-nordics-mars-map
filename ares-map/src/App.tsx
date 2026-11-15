@@ -32,21 +32,26 @@ import {
   type HazardForm, type Sim,
 } from './ui/SafetyPanels';
 import sample from './data/spaceweather.sample.json';
+import { useI18n, type Bi } from './i18n';
 
 const EVENTS = sample.events as SpaceWeatherEvent[];
 
 type Tab = 'map' | 'poi' | 'terrain' | 'weather' | 'route' | 'safety' | 'crew' | 'link' | 'glove';
-const TABS: { id: Tab; label: string }[] = [
-  { id: 'map', label: 'Mapa' },
-  { id: 'poi', label: 'Puntos' },
-  { id: 'terrain', label: 'Terreno' },
-  { id: 'weather', label: 'Clima' },
-  { id: 'route', label: 'Ruta' },
-  { id: 'safety', label: 'Seguridad' },
-  { id: 'crew', label: 'Equipo' },
-  { id: 'link', label: 'Enlace' },
-  { id: 'glove', label: 'Guante' },
+const TABS: { id: Tab; label: Bi }[] = [
+  { id: 'map', label: { en: 'Map', es: 'Mapa' } },
+  { id: 'poi', label: { en: 'Points', es: 'Puntos' } },
+  { id: 'terrain', label: { en: 'Terrain', es: 'Terreno' } },
+  { id: 'weather', label: { en: 'Weather', es: 'Clima' } },
+  { id: 'route', label: { en: 'Route', es: 'Ruta' } },
+  { id: 'safety', label: { en: 'Safety', es: 'Seguridad' } },
+  { id: 'crew', label: { en: 'Crew', es: 'Equipo' } },
+  { id: 'link', label: { en: 'Link', es: 'Enlace' } },
+  { id: 'glove', label: { en: 'Glove', es: 'Guante' } },
 ];
+
+/** Messages are stored as codes (not text) so they follow the language when it changes. */
+type RouteMsg = null | { k: 'outside' } | { k: 'forbidden' } | { k: 'nopair' };
+type PoiMsg = null | { k: 'outside' } | { k: 'forbidden' };
 
 function niceLength(maxMeters: number): number {
   const pow = 10 ** Math.floor(Math.log10(maxMeters));
@@ -84,6 +89,7 @@ function useIsMobile() {
 }
 
 export default function App() {
+  const { lang, setLang, t, l } = useI18n();
   const [tab, setTab] = useState<Tab>('map');
   const [collapsed, setCollapsed] = useState(false);
   const isMobile = useIsMobile();
@@ -113,7 +119,7 @@ export default function App() {
   const [showPois, setShowPois] = useState(true);
   const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
   const [focus, setFocus] = useState<{ coord: [number, number]; nonce: number } | null>(null);
-  const [poiMsg, setPoiMsg] = useState<string | null>(null);
+  const [poiMsg, setPoiMsg] = useState<PoiMsg>(null);
   const selectedPoi = pois.find((p) => p.id === selectedPoiId) ?? null;
   const poiPins = useMemo(
     () => (showPois ? pois.filter((p) => p.kind !== 'shelter').map((p) => ({ id: p.id, coord: p.lonlat, kind: p.kind })) : []),
@@ -186,7 +192,7 @@ export default function App() {
   const [startCell, setStartCell] = useState<number | null>(null);
   const [endCell, setEndCell] = useState<number | null>(null);
   const [selected, setSelected] = useState<RouteProfile>('safe');
-  const [routeMsg, setRouteMsg] = useState<string | null>(null);
+  const [routeMsg, setRouteMsg] = useState<RouteMsg>(null);
   const endpointBlocked =
     (startCell !== null && cost.cls[startCell] === 3) || (endCell !== null && cost.cls[endCell] === 3);
   const routes = useMemo(
@@ -217,7 +223,7 @@ export default function App() {
     () => startCell ?? nearestPassable(travelWeights(cost), grid.size, grid.size >> 1, grid.size >> 1),
     [startCell, cost, grid.size],
   );
-  const positionLabel = startCell !== null ? 'tu posición (A)' : 'el centro del AOI';
+  const positionLabel = startCell !== null ? t('your position (A)', 'tu posición (A)') : t('the AOI center', 'el centro del AOI');
   const shelterPlan = useMemo(() => {
     if (!sim || position === null || shelters.length === 0) return null;
     const n = grid.size;
@@ -269,7 +275,7 @@ export default function App() {
     }
     if (mode === 'probe') return setClicked(ll);
     const cell = cellAt(grid, ll[0], ll[1]);
-    if (!cell) return setRouteMsg('Fuera del AOI: no hay terreno calculado ahí.');
+    if (!cell) return setRouteMsg({ k: 'outside' });
     if (mode === 'hazard') {
       const inc: Incident = {
         id: `inc-${Date.now().toString(36)}`,
@@ -287,7 +293,7 @@ export default function App() {
       return;
     }
     const i = cell.r * grid.size + cell.c;
-    if (cost.cls[i] === 3) return setRouteMsg(`Punto prohibido (pendiente > ${mobility.slopeNoGoDeg}° o peligro reportado). Elegí otro.`);
+    if (cost.cls[i] === 3) return setRouteMsg({ k: 'forbidden' });
     setRouteMsg(null);
     if (mode === 'start') {
       setStartCell(i);
@@ -297,11 +303,34 @@ export default function App() {
       setMode('probe');
     }
   };
-  const routeMessage =
-    routeMsg ?? (endpointBlocked ? 'Inicio o destino quedó en zona prohibida (umbrales o peligro reportado).' : null);
+  const routeText = (m: NonNullable<RouteMsg>) =>
+    m.k === 'outside'
+      ? t('Outside the AOI: no terrain has been computed there.', 'Fuera del AOI: no hay terreno calculado ahí.')
+      : m.k === 'forbidden'
+        ? t(
+            `Forbidden point (slope > ${mobility.slopeNoGoDeg}° or reported hazard). Pick another one.`,
+            `Punto prohibido (pendiente > ${mobility.slopeNoGoDeg}° o peligro reportado). Elegí otro.`,
+          )
+        : t('No connected pair of points was found.', 'No se encontró un par de puntos conectado.');
+  const routeMessage = routeMsg
+    ? routeText(routeMsg)
+    : endpointBlocked
+      ? t(
+          'The start or the destination is now in a forbidden zone (thresholds or reported hazard).',
+          'Inicio o destino quedó en zona prohibida (umbrales o peligro reportado).',
+        )
+      : null;
+  const poiMessage = poiMsg
+    ? poiMsg.k === 'outside'
+      ? t(
+          'That point is outside the 10 km AOI: there is no computed terrain to route it.',
+          'Ese punto está fuera del AOI de 10 km: no hay terreno calculado para rutearlo.',
+        )
+      : t('That point falls in a forbidden zone of the illustrative terrain.', 'Ese punto cae en zona prohibida del terreno ilustrativo.')
+    : null;
   const loadExample = () => {
     const pair = examplePair(grid, cost);
-    if (!pair) return setRouteMsg('No se encontró un par de puntos conectado.');
+    if (!pair) return setRouteMsg({ k: 'nopair' });
     setRouteMsg(null);
     setStartCell(pair.start);
     setEndCell(pair.end);
@@ -335,9 +364,9 @@ export default function App() {
 
   const applyPoiAs = (poi: { lonlat: [number, number] }, as: 'start' | 'end') => {
     const cell = cellAt(grid, poi.lonlat[0], poi.lonlat[1]);
-    if (!cell) return setPoiMsg('Ese punto está fuera del AOI de 10 km: no hay terreno calculado para rutearlo.');
+    if (!cell) return setPoiMsg({ k: 'outside' });
     const i = cell.r * grid.size + cell.c;
-    if (cost.cls[i] === 3) return setPoiMsg('Ese punto cae en zona prohibida del terreno ilustrativo.');
+    if (cost.cls[i] === 3) return setPoiMsg({ k: 'forbidden' });
     setPoiMsg(null);
     if (as === 'start') setStartCell(i);
     else setEndCell(i);
@@ -352,7 +381,7 @@ export default function App() {
     const pos = truePos ? moveBy(truePos, noiseM, (noiseM * 137.5) % 360) : null;
     const alertTarget = sim && shelterPlan ? { label: `Refugio ${shelterPlan.shelter.id}`, coord: shelterPlan.shelter.coord } : null;
     const endLL = endCell !== null ? cellCenter(grid, Math.floor(endCell / grid.size), endCell % grid.size) : null;
-    const target = alertTarget ?? (endLL ? { label: 'Destino B', coord: endLL } : null);
+    const target = alertTarget ?? (endLL ? { label: t('Destination B', 'Destino B'), coord: endLL } : null);
     const dist = pos && target ? distanceM(pos, target.coord) : null;
     return {
       status: sim && assessment ? assessment.status : null,
@@ -385,16 +414,23 @@ export default function App() {
         <div className="panel-head">
           <div>
             <h1>ARES MAP</h1>
-            <p className="sub">Prototipo conceptual · NASA Space Apps 2026</p>
+            <p className="sub">{t('Conceptual prototype', 'Prototipo conceptual')} · NASA Space Apps 2026</p>
+            <div className="lang" role="group" aria-label={t('Language', 'Idioma')}>
+              {(['en', 'es'] as const).map((code) => (
+                <button key={code} aria-pressed={lang === code} lang={code} onClick={() => setLang(code)}>
+                  {code.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
           <button className="panel-toggle" aria-expanded={!collapsed} aria-controls="panel-body" onClick={() => setCollapsed((c) => !c)}>
-            {collapsed ? 'Mostrar panel ▼' : 'Ocultar panel ▲'}
+            {collapsed ? t('Show panel ▼', 'Mostrar panel ▼') : t('Hide panel ▲', 'Ocultar panel ▲')}
           </button>
         </div>
         <div className="tabs" role="tablist" aria-label="Secciones">
-          {TABS.map((t) => (
-            <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => { setTab(t.id); setCollapsed(false); }}>
-              {t.label}
+          {TABS.map((tb) => (
+            <button key={tb.id} role="tab" aria-selected={tab === tb.id} onClick={() => { setTab(tb.id); setCollapsed(false); }}>
+              {l(tb.label)}
             </button>
           ))}
         </div>
@@ -403,30 +439,30 @@ export default function App() {
         {tab === 'map' && (
           <>
             <section>
-              <h2>Sitio</h2>
-              <div className="seg" role="group" aria-label="Sitio">
+              <h2>{t('Site', 'Sitio')}</h2>
+              <div className="seg" role="group" aria-label={t('Site', 'Sitio')}>
                 {Object.values(SITES).map((s) => (
                   <button key={s.id} aria-pressed={s.id === siteId} onClick={() => setSiteId(s.id)}>
                     {s.id === 'gale' ? 'Gale' : 'Jezero'}
                   </button>
                 ))}
               </div>
-              <p className="name">{site.name}</p>
-              <p className="muted">{site.objective_es}</p>
+              <p className="name">{l(site.name)}</p>
+              <p className="muted">{l(site.objective)}</p>
               <DataBadge meta={site.meta} />
             </section>
             {(['base', 'thermal'] as const).map((group) => (
               <section key={group}>
-                <h2>{group === 'base' ? 'Capas base' : 'Térmico'}</h2>
+                <h2>{group === 'base' ? t('Base layers', 'Capas base') : t('Thermal', 'Térmico')}</h2>
                 {LAYER_DEFS.filter((d) => d.group === group).map((d) => (
                   <div className="layer" key={d.id}>
                     <label>
                       <input type="checkbox" checked={layers[d.id].visible} onChange={(e) => patch(d.id, { visible: e.target.checked })} />
-                      {d.label_es}
+                      {l(d.label)}
                     </label>
                     <input
                       type="range" min={0} max={1} step={0.05} value={layers[d.id].opacity}
-                      aria-label={`Opacidad ${d.label_es}`}
+                      aria-label={`${t('Opacity', 'Opacidad')} ${l(d.label)}`}
                       onChange={(e) => patch(d.id, { opacity: Number(e.target.value) })}
                     />
                     <DataBadge meta={d.meta} />
@@ -435,20 +471,23 @@ export default function App() {
               </section>
             ))}
             <section>
-              <h2>Modo sin conexión</h2>
+              <h2>{t('Offline mode', 'Modo sin conexión')}</h2>
               <p className="muted">
-                Guarda en el dispositivo las imágenes de la vista inicial de este sitio. Los datos del terreno, rutas, alertas y paneles ya viajan dentro de la app.
+                {t(
+                  "Saves the map imagery of this site's initial view on the device. Terrain data, routes, alerts and panels already ship inside the app.",
+                  'Guarda en el dispositivo las imágenes de la vista inicial de este sitio. Los datos del terreno, rutas, alertas y paneles ya viajan dentro de la app.',
+                )}
               </p>
               <button className="ghost" onClick={prepareOffline} disabled={offline.running || !online}>
-                {offline.running ? 'Descargando…' : 'Preparar modo offline'}
+                {offline.running ? t('Downloading…', 'Descargando…') : t('Prepare offline mode', 'Preparar modo offline')}
               </button>
               {offline.result && (
                 <p className={offline.result.failed ? 'warnbox' : 'okbox'} role="status">
-                  {offline.result.done}/{offline.result.total} imágenes guardadas{offline.result.failed ? `, ${offline.result.failed} fallaron` : ''}.
+                  {offline.result.done}/{offline.result.total} {t('images saved', 'imágenes guardadas')}{offline.result.failed ? `, ${offline.result.failed} ${t('failed', 'fallaron')}` : ''}.
                 </p>
               )}
               {offline.error && <p className="warnbox" role="status">{offline.error}</p>}
-              <p className="muted">Service worker: {swActive ? 'activo (la app abre sin red)' : 'inactivo en este modo (se activa en la versión instalada/compilada)'}.</p>
+              <p className="muted">Service worker: {swActive ? t('active (the app opens without a network)', 'activo (la app abre sin red)') : t('inactive in this mode (it activates in the installed/built version)', 'inactivo en este modo (se activa en la versión instalada/compilada)')}.</p>
             </section>
           </>
         )}
@@ -460,7 +499,7 @@ export default function App() {
             onToggleTraverse={setShowTraverse} onTogglePois={setShowPois}
             onSelect={(id) => { setSelectedPoiId(id); setPoiMsg(null); }}
             onCenter={(p) => setFocus({ coord: p.lonlat, nonce: Date.now() })}
-            onUseAs={applyPoiAs} message={poiMsg}
+            onUseAs={applyPoiAs} message={poiMessage}
           />
         )}
 
@@ -498,22 +537,22 @@ export default function App() {
         {tab === 'safety' && (
           <>
             <section>
-              <h2>Radiación en el terreno</h2>
+              <h2>{t('Radiation on the terrain', 'Radiación en el terreno')}</h2>
               <div className="layer">
                 <label>
                   <input
                     type="checkbox" checked={ovState.shielding.visible}
                     onChange={(e) => setOvState((s) => ({ ...s, shielding: { ...s.shielding, visible: e.target.checked } }))}
                   />
-                  Blindaje del terreno (estimado)
+                  {t('Terrain shielding (estimated)', 'Blindaje del terreno (estimado)')}
                 </label>
                 <input
                   type="range" min={0} max={1} step={0.05} value={ovState.shielding.opacity}
-                  aria-label="Opacidad blindaje"
+                  aria-label={t('Shielding opacity', 'Opacidad blindaje')}
                   onChange={(e) => setOvState((s) => ({ ...s, shielding: { ...s.shielding, opacity: Number(e.target.value) } }))}
                 />
               </div>
-              <p className="muted">Más color = menos cielo visible = menor dosis relativa. Modelo simplificado, no transporte de radiación.</p>
+              <p className="muted">{t('More color = less visible sky = lower relative dose. Simplified model, not radiation transport.', 'Más color = menos cielo visible = menor dosis relativa. Modelo simplificado, no transporte de radiación.')}</p>
               <DataBadge meta={SHIELD_META} />
             </section>
             <SheltersSection shelters={shelters} siteId={siteId} />
@@ -566,16 +605,22 @@ export default function App() {
           onView={(res, lat) => setView({ res, lat })}
         />
         {OVERLAY_IDS.some((id) => ovState[id].visible) && (
-          <div className="banner" role="note">TERRENO ILUSTRATIVO · no corresponde al relieve real del sitio</div>
+          <div className="banner" role="note">{t('ILLUSTRATIVE TERRAIN · does not match the real relief of the site', 'TERRENO ILUSTRATIVO · no corresponde al relieve real del sitio')}</div>
         )}
-        {mode === 'hazard' && <div className="banner danger" role="note">Hacé clic donde está el peligro</div>}
+        {mode === 'hazard' && <div className="banner danger" role="note">{t('Click where the hazard is', 'Hacé clic donde está el peligro')}</div>}
         {(mode === 'start' || mode === 'end') && (
-          <div className="banner pick" role="note">Hacé clic en el mapa para fijar {mode === 'start' ? 'el inicio A' : 'el destino B'}</div>
+          <div className="banner pick" role="note">
+            {mode === 'start'
+              ? t('Click the map to set the start A', 'Hacé clic en el mapa para fijar el inicio A')
+              : t('Click the map to set the destination B', 'Hacé clic en el mapa para fijar el destino B')}
+          </div>
         )}
         <div className="scale" style={{ width: scale.px }}>{fmtDist(scale.meters)}</div>
         <footer className="status">
           <span>{pointer ? `LAT ${pointer[1].toFixed(4)}°  LON ${pointer[0].toFixed(4)}°E` : 'LAT —  LON —'}</span>
-          <span className={online ? 'ok' : 'warn'}>ENLACE: {online ? 'RED DISPONIBLE' : 'SIN SEÑAL'}</span>
+          <span className={online ? 'ok' : 'warn'}>
+            {t('LINK', 'ENLACE')}: {online ? t('NETWORK AVAILABLE', 'RED DISPONIBLE') : t('NO SIGNAL', 'SIN SEÑAL')}
+          </span>
         </footer>
       </main>
     </div>

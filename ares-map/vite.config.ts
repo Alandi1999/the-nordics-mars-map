@@ -23,10 +23,10 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg'],
       manifest: {
-        name: 'ARES MAP · prototipo conceptual',
+        name: 'ARES MAP · conceptual prototype',
         short_name: 'ARES MAP',
-        description: 'Mapa de exploración de Marte para una caminata en superficie (prototipo conceptual, NASA Space Apps).',
-        lang: 'es',
+        description: 'Mars exploration map for a surface walk (conceptual prototype, NASA Space Apps).',
+        lang: 'en',
         display: 'standalone',
         background_color: '#0b0d10',
         theme_color: '#0b0d10',

@@ -1,15 +1,16 @@
 import type { SiteId } from '../config/sites';
+import type { Bi } from '../i18n';
 import { METERS_PER_DEGREE, metersPerDegreeLon } from '../lib/mars';
 import { cellAt, type TerrainGrid } from '../terrain/grid';
 import type { CostGrid } from './cost';
 
 export type IncidentType = 'unstable_ground' | 'blocked' | 'dust' | 'other';
 
-export const INCIDENT_LABEL: Record<IncidentType, string> = {
-  unstable_ground: 'Terreno inestable',
-  blocked: 'Paso bloqueado',
-  dust: 'Polvo / baja visibilidad',
-  other: 'Otro',
+export const INCIDENT_LABEL: Record<IncidentType, Bi> = {
+  unstable_ground: { en: 'Unstable ground', es: 'Terreno inestable' },
+  blocked: { en: 'Blocked passage', es: 'Paso bloqueado' },
+  dust: { en: 'Dust / low visibility', es: 'Polvo / baja visibilidad' },
+  other: { en: 'Other', es: 'Otro' },
 };
 
 /** Local observation (tier 2) queued to sync with Earth when there is a link. */

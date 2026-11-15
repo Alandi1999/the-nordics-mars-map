@@ -1,3 +1,4 @@
+import type { Bi } from '../i18n';
 import type { CostGrid } from '../routing/cost';
 import type { Derived } from './derive';
 import type { TerrainGrid } from './grid';
@@ -90,11 +91,11 @@ export function renderOverlay(id: OverlayId, g: TerrainGrid, d: Derived, cost: C
   }
 }
 
-export const OVERLAY_LABELS: Record<OverlayId, string> = {
-  hillshade: 'Relieve sombreado (ilustrativo)',
-  slope: 'Pendiente (°)',
-  roughness: 'Rugosidad (proxy)',
-  cost: 'Mapa de costo / peligro',
-  contours: `Curvas de nivel (${CONTOUR_INTERVAL_M} m)`,
-  shielding: 'Blindaje del terreno (dosis relativa, estimada)',
+export const OVERLAY_LABELS: Record<OverlayId, Bi> = {
+  hillshade: { en: 'Shaded relief (illustrative)', es: 'Relieve sombreado (ilustrativo)' },
+  slope: { en: 'Slope (°)', es: 'Pendiente (°)' },
+  roughness: { en: 'Roughness (proxy)', es: 'Rugosidad (proxy)' },
+  cost: { en: 'Cost / hazard map', es: 'Mapa de costo / peligro' },
+  contours: { en: `Contour lines (${CONTOUR_INTERVAL_M} m)`, es: `Curvas de nivel (${CONTOUR_INTERVAL_M} m)` },
+  shielding: { en: 'Terrain shielding (relative dose, estimated)', es: 'Blindaje del terreno (dosis relativa, estimada)' },
 };

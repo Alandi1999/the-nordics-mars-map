@@ -4,11 +4,12 @@ import TileWMS from 'ol/source/TileWMS';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import type BaseLayer from 'ol/layer/Base';
 import type { DataMeta } from '../lib/dataMeta';
+import type { Text } from '../i18n';
 import { PROBE_DATE } from '../lib/dataMeta';
 
 export interface LayerDef {
   id: string;
-  label_es: string;
+  label: Text;
   group: 'base' | 'thermal';
   defaultVisible: boolean;
   defaultOpacity: number;
@@ -57,10 +58,10 @@ function wmsLayer(layerName: string): TileLayer<TileWMS> {
   });
 }
 
-const usgsMeta = (name: string, notes: string): DataMeta => ({
+const usgsMeta = (name: string, notes: Text): DataMeta => ({
   source: `USGS Astrogeology WMS · ${name}`,
   sourceUrl: 'https://planetarymaps.usgs.gov/',
-  acquiredAt: 'Mosaico histórico (la fuente no lo fecha)',
+  acquiredAt: { en: 'Historical mosaic (the source does not date it)', es: 'Mosaico histórico (la fuente no lo fecha)' },
   retrievedAt: PROBE_DATE,
   tier: 1,
   confidence: 'high',
@@ -71,56 +72,59 @@ const usgsMeta = (name: string, notes: string): DataMeta => ({
 export const LAYER_DEFS: LayerDef[] = [
   {
     id: 'viking',
-    label_es: 'Imagen Viking (color, ≈ 325 m/px)',
+    label: { en: 'Viking imagery (color, ≈ 325 m/px)', es: 'Imagen Viking (color, ≈ 325 m/px)' },
     group: 'base',
     defaultVisible: true,
     defaultOpacity: 1,
     create: () => trekLayer('Mars_Viking_MDIM21_ClrMosaic_global_232m'),
     meta: {
-      source: 'NASA Trek · Viking MDIM 2.1 color (nivel 7, ≈ 325 m/px)',
+      source: { en: 'NASA Trek · Viking MDIM 2.1 color (level 7, ≈ 325 m/px)', es: 'NASA Trek · Viking MDIM 2.1 color (nivel 7, ≈ 325 m/px)' },
       sourceUrl: 'https://trek.nasa.gov/mars/',
-      acquiredAt: 'Misiones Viking (1976–1980), mosaico MDIM 2.1',
+      acquiredAt: { en: 'Viking missions (1976–1980), MDIM 2.1 mosaic', es: 'Misiones Viking (1976–1980), mosaico MDIM 2.1' },
       retrievedAt: PROBE_DATE,
       tier: 1,
       confidence: 'high',
       shelfLife: 'slow',
-      notes: 'Resolución global gruesa: no distingue obstáculos de caminata. Los tiles de Trek solo existen hasta el nivel 7; al acercarse se estira.',
+      notes: {
+        en: 'Coarse global resolution: it cannot resolve walking obstacles. Trek tiles only exist up to level 7; zooming in stretches them.',
+        es: 'Resolución global gruesa: no distingue obstáculos de caminata. Los tiles de Trek solo existen hasta el nivel 7; al acercarse se estira.',
+      },
     },
   },
   {
     id: 'mola',
-    label_es: 'Elevación MOLA (color)',
+    label: { en: 'MOLA elevation (color)', es: 'Elevación MOLA (color)' },
     group: 'base',
     defaultVisible: false,
     defaultOpacity: 0.7,
     create: () => wmsLayer('MOLA_color'),
-    meta: usgsMeta('MOLA_color', 'Altimetría láser de Mars Global Surveyor, color por elevación.'),
+    meta: usgsMeta('MOLA_color', { en: 'Mars Global Surveyor laser altimetry, colored by elevation.', es: 'Altimetría láser de Mars Global Surveyor, color por elevación.' }),
   },
   {
     id: 'hillshade',
-    label_es: 'Relieve sombreado HRSC+MOLA',
+    label: { en: 'HRSC+MOLA shaded relief', es: 'Relieve sombreado HRSC+MOLA' },
     group: 'base',
     defaultVisible: false,
     defaultOpacity: 0.7,
     create: () => wmsLayer('HRSC_MOLA_Blend_Hillshade'),
-    meta: usgsMeta('HRSC_MOLA_Blend_Hillshade', 'Sombreado derivado del DEM mezclado HRSC/MOLA (~200 m/px).'),
+    meta: usgsMeta('HRSC_MOLA_Blend_Hillshade', { en: 'Shading derived from the blended HRSC/MOLA DEM (~200 m/px).', es: 'Sombreado derivado del DEM mezclado HRSC/MOLA (~200 m/px).' }),
   },
   {
     id: 'themis-day',
-    label_es: 'Térmico THEMIS (día)',
+    label: { en: 'THEMIS thermal (day)', es: 'Térmico THEMIS (día)' },
     group: 'thermal',
     defaultVisible: false,
     defaultOpacity: 0.8,
     create: () => wmsLayer('THEMIS'),
-    meta: usgsMeta('THEMIS', 'Mosaico infrarrojo diurno de Mars Odyssey. Capa `THEMIS` del WMS.'),
+    meta: usgsMeta('THEMIS', { en: 'Daytime infrared mosaic from Mars Odyssey. WMS layer `THEMIS`.', es: 'Mosaico infrarrojo diurno de Mars Odyssey. Capa `THEMIS` del WMS.' }),
   },
   {
     id: 'themis-night',
-    label_es: 'Térmico THEMIS (noche)',
+    label: { en: 'THEMIS thermal (night)', es: 'Térmico THEMIS (noche)' },
     group: 'thermal',
     defaultVisible: false,
     defaultOpacity: 0.8,
     create: () => wmsLayer('THEMIS_night'),
-    meta: usgsMeta('THEMIS_night', 'Mosaico infrarrojo nocturno de Mars Odyssey.'),
+    meta: usgsMeta('THEMIS_night', { en: 'Nighttime infrared mosaic from Mars Odyssey.', es: 'Mosaico infrarrojo nocturno de Mars Odyssey.' }),
   },
 ];

@@ -1,21 +1,369 @@
 {
   "_comment": "Initial content from ARES_MAP_SPEC.md Appendix A. Entries with pendingSource=true come from the team board and still need a primary citation before being shown as fact. applies_to and category are the prototype's own grouping.",
   "items": [
-    { "id": "bone-loss", "category": "Fisiológico", "title_es": "Pérdida ósea", "text_es": "En microgravedad se pierde en promedio 1–1,5 % de la densidad mineral ósea por mes en sitios de carga (misiones de 4–6 meses). En 0,38 g (Marte) no se sabe si la pérdida se reduce ni si se estabiliza: no existe un valor válido para la superficie.", "countermeasure_es": "Ejercicio de resistencia (ver «Ejercicio»).", "source": "NASA HRP, Risk of Spaceflight-Induced Bone Changes; Evidence Report NTRS 20170004597 (2017)", "confidence": "high", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": false },
-    { "id": "exercise", "category": "Fisiológico", "title_es": "Ejercicio", "text_es": "En la ISS: bloques de 2,5 h, 6 días por semana (1,5 h de resistencia + 1 h aeróbico). Es una cifra de microgravedad; para la superficie marciana no hay un valor oficial.", "source": "NASA NTRS 20110016265; NASA ISS Exercise Countermeasures", "confidence": "high", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": false },
-    { "id": "third-quarter", "category": "Psicológico y de equipo", "title_es": "Cohesión y «tercer cuarto»", "text_es": "Se ha reportado una caída de cohesión hacia el tercer cuarto de una misión en algunos análogos, pero la evidencia es mixta: una revisión concluye que hay poca evidencia de un efecto dependiente del tiempo. No usarlo como regla ni como predicción.", "source": "Kanas, Gushin y Yusupova, Aerosp Med Hum Perform 92(8), 2021", "confidence": "medium", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": false },
-    { "id": "ice-environments", "category": "Psicológico y de equipo", "title_es": "Ambientes ICE", "text_es": "ICE (Isolated, Confined, Extreme): marco del programa de investigación humana de la NASA para riesgos psicológicos y de equipo.", "source": "Pendiente de fuente primaria: citar la página de NASA HRP", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": true },
-    { "id": "sans", "category": "Fisiológico", "title_es": "SANS (visión)", "text_es": "Redistribución de fluidos y deterioro de la agudeza visual durante el tránsito.", "source": "Pendiente de fuente primaria: citar NASA HRP «Risk of SANS»", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "transit", "pendingSource": true },
-    { "id": "orthostatic", "category": "Fisiológico", "title_es": "Ortostatismo al llegar", "text_es": "Caída de la presión arterial al ponerse de pie tras la microgravedad y desorientación vestibular.", "source": "Pendiente de fuente primaria: citar NASA HRP", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "surface", "pendingSource": true },
-    { "id": "radiation-budget", "category": "Radiación", "title_es": "Presupuesto de radiación", "text_es": "Dos fuentes: rayos cósmicos galácticos (GCR) y partículas solares (SEP). Línea base medida en superficie por RAD en Gale: ≈ 0,67 mSv/día de dosis equivalente (ago-2012 a jun-2013), frente a ≈ 1,8 mSv/día dentro de la nave en tránsito. Varía con el ciclo solar y con la presión atmosférica. El límite de carrera de la NASA está pendiente de fuente.", "source": "MSL/RAD, Hassler et al., Science 2014", "confidence": "high", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": false },
-    { "id": "circadian", "category": "Fisiológico", "title_es": "Ritmo circadiano", "text_es": "El sol marciano dura 24 h 39 min 35 s: un reloj de 24 h se desfasa unos 40 min por sol. Las contramedidas de luz están pendientes de fuente.", "countermeasure_es": "Contramedidas de luz (pendiente de fuente).", "source": "Duración del sol: valor estándar. Contramedida: pendiente de fuente primaria", "confidence": "medium", "last_reviewed": "2026-11-14", "applies_to": "surface", "pendingSource": true },
-    { "id": "perchlorates", "category": "Ambiente", "title_es": "Percloratos en el regolito", "text_es": "Sales oxidantes con riesgo endocrino; evitar su ingreso por las esclusas.", "source": "Pendiente de fuente primaria (Phoenix / MSL)", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "surface", "pendingSource": true },
-    { "id": "dust-abrasion", "category": "Ambiente", "title_es": "Polvo abrasivo", "text_es": "Degrada trajes y sellos; requiere control en la esclusa.", "source": "Pendiente de fuente primaria", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "surface", "pendingSource": true },
-    { "id": "safe-haven", "category": "Emergencia", "title_es": "Refugio ante evento solar", "text_es": "Confinarse en una zona blindada (con agua y provisiones) hasta que baje el flujo.", "source": "Pendiente de fuente primaria (arquitectura de la misión)", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "surface", "pendingSource": true },
-    { "id": "pressure-breach", "category": "Emergencia", "title_es": "Brecha de presión", "text_es": "Sellar el módulo afectado y tener accesible el traje de emergencia presurizado. No se afirma ninguna cifra de segundos.", "source": "Pendiente de fuente primaria", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": true },
-    { "id": "isru-failure", "category": "Emergencia", "title_es": "Falla de ISRU", "text_es": "Pasar a soporte vital de emergencia, cancelar la EVA y racionar consumibles.", "source": "Pendiente de fuente primaria", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "surface", "pendingSource": true },
-    { "id": "iv-fluid", "category": "Tecnología médica", "title_es": "Suero in situ", "text_es": "IVGEN (demostración en la ISS, 2010) genera fluido intravenoso a partir de agua potable; IVGEN Mini está en pruebas en 2026.", "source": "NASA NTRS (IVGEN Mini)", "confidence": "high", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": false },
-    { "id": "crisis-psych", "category": "Psicológico y de equipo", "title_es": "Crisis psicológica", "text_es": "Relevar de la EVA, activar la línea de sucesión y descanso forzado. No presentar como protocolo oficial.", "source": "Pendiente de fuente primaria", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": true },
-    { "id": "medical-ai", "category": "Tecnología médica", "title_es": "IA médica y telemedicina asíncrona", "text_es": "Guía asistida y manuales interactivos; la latencia (ida y vuelta de 6 a 44 min) impide la consulta en tiempo real. Es un concepto.", "source": "Pendiente de fuente primaria", "confidence": "low", "last_reviewed": "2026-11-14", "applies_to": "both", "pendingSource": true }
+    {
+      "id": "bone-loss",
+      "category": {
+        "en": "Physiological",
+        "es": "Fisiológico"
+      },
+      "title": {
+        "en": "Bone loss",
+        "es": "Pérdida ósea"
+      },
+      "text": {
+        "en": "In microgravity, bone mineral density at weight-bearing sites falls by an average of 1–1.5% per month (4–6 month missions). At 0.38 g (Mars) it is not known whether the loss is reduced or levels off: there is no valid value for the surface.",
+        "es": "En microgravedad se pierde en promedio 1–1,5 % de la densidad mineral ósea por mes en sitios de carga (misiones de 4–6 meses). En 0,38 g (Marte) no se sabe si la pérdida se reduce ni si se estabiliza: no existe un valor válido para la superficie."
+      },
+      "countermeasure": {
+        "en": "Resistance exercise (see “Exercise”).",
+        "es": "Ejercicio de resistencia (ver «Ejercicio»)."
+      },
+      "source": "NASA HRP, Risk of Spaceflight-Induced Bone Changes; Evidence Report NTRS 20170004597 (2017)",
+      "confidence": "high",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": false
+    },
+    {
+      "id": "exercise",
+      "category": {
+        "en": "Physiological",
+        "es": "Fisiológico"
+      },
+      "title": {
+        "en": "Exercise",
+        "es": "Ejercicio"
+      },
+      "text": {
+        "en": "On the ISS: 2.5 h blocks, 6 days per week (1.5 h resistance + 1 h aerobic). This is a microgravity figure; there is no official value for the Martian surface.",
+        "es": "En la ISS: bloques de 2,5 h, 6 días por semana (1,5 h de resistencia + 1 h aeróbico). Es una cifra de microgravedad; para la superficie marciana no hay un valor oficial."
+      },
+      "source": "NASA NTRS 20110016265; NASA ISS Exercise Countermeasures",
+      "confidence": "high",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": false
+    },
+    {
+      "id": "third-quarter",
+      "category": {
+        "en": "Psychological and team",
+        "es": "Psicológico y de equipo"
+      },
+      "title": {
+        "en": "Cohesion and the “third quarter”",
+        "es": "Cohesión y «tercer cuarto»"
+      },
+      "text": {
+        "en": "A drop in cohesion toward the third quarter of a mission has been reported in some analogs, but the evidence is mixed: one review concludes there is little evidence of a time-dependent effect. Do not use it as a rule or a prediction.",
+        "es": "Se ha reportado una caída de cohesión hacia el tercer cuarto de una misión en algunos análogos, pero la evidencia es mixta: una revisión concluye que hay poca evidencia de un efecto dependiente del tiempo. No usarlo como regla ni como predicción."
+      },
+      "source": {
+        "en": "Kanas, Gushin and Yusupova, Aerosp Med Hum Perform 92(8), 2021",
+        "es": "Kanas, Gushin y Yusupova, Aerosp Med Hum Perform 92(8), 2021"
+      },
+      "confidence": "medium",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": false
+    },
+    {
+      "id": "ice-environments",
+      "category": {
+        "en": "Psychological and team",
+        "es": "Psicológico y de equipo"
+      },
+      "title": {
+        "en": "ICE environments",
+        "es": "Ambientes ICE"
+      },
+      "text": {
+        "en": "ICE (Isolated, Confined, Extreme): the framework used by NASA's human research program for psychological and team risks.",
+        "es": "ICE (Isolated, Confined, Extreme): marco del programa de investigación humana de la NASA para riesgos psicológicos y de equipo."
+      },
+      "source": {
+        "en": "Pending a primary source: cite the NASA HRP page",
+        "es": "Pendiente de fuente primaria: citar la página de NASA HRP"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": true
+    },
+    {
+      "id": "sans",
+      "category": {
+        "en": "Physiological",
+        "es": "Fisiológico"
+      },
+      "title": {
+        "en": "SANS (vision)",
+        "es": "SANS (visión)"
+      },
+      "text": {
+        "en": "Fluid redistribution and impaired visual acuity during transit.",
+        "es": "Redistribución de fluidos y deterioro de la agudeza visual durante el tránsito."
+      },
+      "source": {
+        "en": "Pending a primary source: cite NASA HRP “Risk of SANS”",
+        "es": "Pendiente de fuente primaria: citar NASA HRP «Risk of SANS»"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "transit",
+      "pendingSource": true
+    },
+    {
+      "id": "orthostatic",
+      "category": {
+        "en": "Physiological",
+        "es": "Fisiológico"
+      },
+      "title": {
+        "en": "Orthostatic intolerance on arrival",
+        "es": "Ortostatismo al llegar"
+      },
+      "text": {
+        "en": "Drop in blood pressure on standing after microgravity, and vestibular disorientation.",
+        "es": "Caída de la presión arterial al ponerse de pie tras la microgravedad y desorientación vestibular."
+      },
+      "source": {
+        "en": "Pending a primary source: cite NASA HRP",
+        "es": "Pendiente de fuente primaria: citar NASA HRP"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "surface",
+      "pendingSource": true
+    },
+    {
+      "id": "radiation-budget",
+      "category": {
+        "en": "Radiation",
+        "es": "Radiación"
+      },
+      "title": {
+        "en": "Radiation budget",
+        "es": "Presupuesto de radiación"
+      },
+      "text": {
+        "en": "Two sources: galactic cosmic rays (GCR) and solar energetic particles (SEP). Surface baseline measured by RAD at Gale: ≈ 0.67 mSv/day dose equivalent (Aug 2012 to Jun 2013), versus ≈ 1.8 mSv/day inside the spacecraft in transit. It varies with the solar cycle and atmospheric pressure. NASA's career limit is pending a source.",
+        "es": "Dos fuentes: rayos cósmicos galácticos (GCR) y partículas solares (SEP). Línea base medida en superficie por RAD en Gale: ≈ 0,67 mSv/día de dosis equivalente (ago-2012 a jun-2013), frente a ≈ 1,8 mSv/día dentro de la nave en tránsito. Varía con el ciclo solar y con la presión atmosférica. El límite de carrera de la NASA está pendiente de fuente."
+      },
+      "source": "MSL/RAD, Hassler et al., Science 2014",
+      "confidence": "high",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": false
+    },
+    {
+      "id": "circadian",
+      "category": {
+        "en": "Physiological",
+        "es": "Fisiológico"
+      },
+      "title": {
+        "en": "Circadian rhythm",
+        "es": "Ritmo circadiano"
+      },
+      "text": {
+        "en": "The Martian sol lasts 24 h 39 min 35 s: a 24 h clock drifts by about 40 min per sol. Light countermeasures are pending a source.",
+        "es": "El sol marciano dura 24 h 39 min 35 s: un reloj de 24 h se desfasa unos 40 min por sol. Las contramedidas de luz están pendientes de fuente."
+      },
+      "countermeasure": {
+        "en": "Light countermeasures (pending a source).",
+        "es": "Contramedidas de luz (pendiente de fuente)."
+      },
+      "source": {
+        "en": "Sol length: standard value. Countermeasure: pending a primary source",
+        "es": "Duración del sol: valor estándar. Contramedida: pendiente de fuente primaria"
+      },
+      "confidence": "medium",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "surface",
+      "pendingSource": true
+    },
+    {
+      "id": "perchlorates",
+      "category": {
+        "en": "Environment",
+        "es": "Ambiente"
+      },
+      "title": {
+        "en": "Perchlorates in the regolith",
+        "es": "Percloratos en el regolito"
+      },
+      "text": {
+        "en": "Oxidizing salts with endocrine risk; keep them out of the airlocks.",
+        "es": "Sales oxidantes con riesgo endocrino; evitar su ingreso por las esclusas."
+      },
+      "source": {
+        "en": "Pending a primary source (Phoenix / MSL)",
+        "es": "Pendiente de fuente primaria (Phoenix / MSL)"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "surface",
+      "pendingSource": true
+    },
+    {
+      "id": "dust-abrasion",
+      "category": {
+        "en": "Environment",
+        "es": "Ambiente"
+      },
+      "title": {
+        "en": "Abrasive dust",
+        "es": "Polvo abrasivo"
+      },
+      "text": {
+        "en": "Degrades suits and seals; requires control at the airlock.",
+        "es": "Degrada trajes y sellos; requiere control en la esclusa."
+      },
+      "source": {
+        "en": "Pending a primary source",
+        "es": "Pendiente de fuente primaria"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "surface",
+      "pendingSource": true
+    },
+    {
+      "id": "safe-haven",
+      "category": {
+        "en": "Emergency",
+        "es": "Emergencia"
+      },
+      "title": {
+        "en": "Solar event shelter",
+        "es": "Refugio ante evento solar"
+      },
+      "text": {
+        "en": "Shelter in a shielded area (with water and supplies) until the flux drops.",
+        "es": "Confinarse en una zona blindada (con agua y provisiones) hasta que baje el flujo."
+      },
+      "source": {
+        "en": "Pending a primary source (mission architecture)",
+        "es": "Pendiente de fuente primaria (arquitectura de la misión)"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "surface",
+      "pendingSource": true
+    },
+    {
+      "id": "pressure-breach",
+      "category": {
+        "en": "Emergency",
+        "es": "Emergencia"
+      },
+      "title": {
+        "en": "Pressure breach",
+        "es": "Brecha de presión"
+      },
+      "text": {
+        "en": "Seal the affected module and keep the pressurized emergency suit within reach. No figure in seconds is claimed.",
+        "es": "Sellar el módulo afectado y tener accesible el traje de emergencia presurizado. No se afirma ninguna cifra de segundos."
+      },
+      "source": {
+        "en": "Pending a primary source",
+        "es": "Pendiente de fuente primaria"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": true
+    },
+    {
+      "id": "isru-failure",
+      "category": {
+        "en": "Emergency",
+        "es": "Emergencia"
+      },
+      "title": {
+        "en": "ISRU failure",
+        "es": "Falla de ISRU"
+      },
+      "text": {
+        "en": "Switch to emergency life support, cancel the EVA and ration consumables.",
+        "es": "Pasar a soporte vital de emergencia, cancelar la EVA y racionar consumibles."
+      },
+      "source": {
+        "en": "Pending a primary source",
+        "es": "Pendiente de fuente primaria"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "surface",
+      "pendingSource": true
+    },
+    {
+      "id": "iv-fluid",
+      "category": {
+        "en": "Medical technology",
+        "es": "Tecnología médica"
+      },
+      "title": {
+        "en": "IV fluid on site",
+        "es": "Suero in situ"
+      },
+      "text": {
+        "en": "IVGEN (ISS demonstration, 2010) generates intravenous fluid from potable water; IVGEN Mini is in testing in 2026.",
+        "es": "IVGEN (demostración en la ISS, 2010) genera fluido intravenoso a partir de agua potable; IVGEN Mini está en pruebas en 2026."
+      },
+      "source": "NASA NTRS (IVGEN Mini)",
+      "confidence": "high",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": false
+    },
+    {
+      "id": "crisis-psych",
+      "category": {
+        "en": "Psychological and team",
+        "es": "Psicológico y de equipo"
+      },
+      "title": {
+        "en": "Psychological crisis",
+        "es": "Crisis psicológica"
+      },
+      "text": {
+        "en": "Relieve the person from EVA, activate the line of succession and enforce rest. Do not present as an official protocol.",
+        "es": "Relevar de la EVA, activar la línea de sucesión y descanso forzado. No presentar como protocolo oficial."
+      },
+      "source": {
+        "en": "Pending a primary source",
+        "es": "Pendiente de fuente primaria"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": true
+    },
+    {
+      "id": "medical-ai",
+      "category": {
+        "en": "Medical technology",
+        "es": "Tecnología médica"
+      },
+      "title": {
+        "en": "Medical AI and asynchronous telemedicine",
+        "es": "IA médica y telemedicina asíncrona"
+      },
+      "text": {
+        "en": "Assisted guidance and interactive manuals; latency (6 to 44 min round trip) rules out real-time consultation. This is a concept.",
+        "es": "Guía asistida y manuales interactivos; la latencia (ida y vuelta de 6 a 44 min) impide la consulta en tiempo real. Es un concepto."
+      },
+      "source": {
+        "en": "Pending a primary source",
+        "es": "Pendiente de fuente primaria"
+      },
+      "confidence": "low",
+      "last_reviewed": "2026-11-14",
+      "applies_to": "both",
+      "pendingSource": true
+    }
   ]
 }

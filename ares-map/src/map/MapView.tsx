@@ -15,6 +15,7 @@ import type BaseLayer from 'ol/layer/Base';
 import { LAYER_DEFS } from './layers';
 import { METERS_PER_DEGREE } from '../lib/mars';
 import type { SiteConfig } from '../config/sites';
+import { useI18n } from '../i18n';
 
 export interface LayerState {
   visible: boolean;
@@ -148,6 +149,7 @@ const markerStyle = new Style({
 });
 
 export function MapView({ site, layers, overlays, aoi, marker, routes, endpoints, shelters, hazards, traverse, pois, selectedPoi, focus, onPointer, onClick, onView }: Props) {
+  const { t } = useI18n();
   const host = useRef<HTMLDivElement>(null);
   const map = useRef<Map | null>(null);
   const olLayers = useRef<Record<string, BaseLayer>>({});
@@ -312,5 +314,5 @@ export function MapView({ site, layers, overlays, aoi, marker, routes, endpoints
     }
   }, [overlays]);
 
-  return <div ref={host} className="map" role="application" aria-label="Mapa de Marte" />;
+  return <div ref={host} className="map" role="application" aria-label={t('Map of Mars', 'Mapa de Marte')} />;
 }

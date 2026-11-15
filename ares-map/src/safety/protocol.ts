@@ -1,3 +1,5 @@
+import type { Bi } from '../i18n';
+
 export type Severity = 'minor' | 'moderate' | 'severe';
 
 /** Space-weather event in the shape of a DONKI WSA-ENLIL impact entry (location "Mars"). */
@@ -11,7 +13,7 @@ export interface SpaceWeatherEvent {
   /** Minutes from "now" to arrival when the event is triggered in the demo. */
   etaMin: number;
   severity: Severity;
-  title_es: string;
+  title: Bi;
 }
 
 export type Status = 'ok' | 'tight' | 'late' | 'no-shelter';
@@ -32,9 +34,24 @@ export function assess(minutesToArrival: number, walkMinToShelter: number | null
   return { status: margin < bufferMin ? 'tight' : 'ok', marginMin: margin };
 }
 
-export const STATUS_TEXT: Record<Status, { code: string; action_es: string }> = {
-  ok: { code: 'CÓDIGO VERDE', action_es: 'Interrumpir la actividad y dirigirse al refugio ahora; hay margen suficiente.' },
-  tight: { code: 'CÓDIGO ÁMBAR', action_es: 'Ir al refugio de inmediato y sin desvíos; el margen es corto.' },
-  late: { code: 'CÓDIGO ROJO', action_es: 'No se llega al refugio antes de la llegada: ir al terreno más blindado cercano y pedir ayuda al hábitat.' },
-  'no-shelter': { code: 'SIN REFUGIO', action_es: 'No hay refugio candidato en el AOI: volver al hábitat por la ruta conocida.' },
+export const STATUS_TEXT: Record<Status, { code: Bi; action: Bi }> = {
+  ok: {
+    code: { en: 'GREEN CODE', es: 'CÓDIGO VERDE' },
+    action: { en: 'Stop the activity and head to the shelter now; there is enough margin.', es: 'Interrumpir la actividad y dirigirse al refugio ahora; hay margen suficiente.' },
+  },
+  tight: {
+    code: { en: 'AMBER CODE', es: 'CÓDIGO ÁMBAR' },
+    action: { en: 'Go to the shelter immediately and without detours; the margin is short.', es: 'Ir al refugio de inmediato y sin desvíos; el margen es corto.' },
+  },
+  late: {
+    code: { en: 'RED CODE', es: 'CÓDIGO ROJO' },
+    action: {
+      en: 'The shelter cannot be reached before arrival: go to the nearest best-shielded terrain and call the habitat for help.',
+      es: 'No se llega al refugio antes de la llegada: ir al terreno más blindado cercano y pedir ayuda al hábitat.',
+    },
+  },
+  'no-shelter': {
+    code: { en: 'NO SHELTER', es: 'SIN REFUGIO' },
+    action: { en: 'No candidate shelter in the AOI: return to the habitat by the known route.', es: 'No hay refugio candidato en el AOI: volver al hábitat por la ruta conocida.' },
+  },
 };

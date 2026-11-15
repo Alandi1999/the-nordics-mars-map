@@ -1,10 +1,20 @@
+import type { Bi } from '../i18n';
 import type { CostGrid } from '../routing/cost';
 import type { Derived } from './derive';
 import { cellAt, type TerrainGrid } from './grid';
 import { RAD_GALE_MSV_PER_DAY } from './shielding';
 
-const NAMES = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'];
-export const compass = (deg: number) => NAMES[Math.round(deg / 45) % 8];
+const NAMES: Bi[] = [
+  { en: 'N', es: 'N' },
+  { en: 'NE', es: 'NE' },
+  { en: 'E', es: 'E' },
+  { en: 'SE', es: 'SE' },
+  { en: 'S', es: 'S' },
+  { en: 'SW', es: 'SO' },
+  { en: 'W', es: 'O' },
+  { en: 'NW', es: 'NO' },
+];
+export const compass = (deg: number): Bi => NAMES[Math.round(deg / 45) % 8];
 
 export interface Probe {
   lon: number;

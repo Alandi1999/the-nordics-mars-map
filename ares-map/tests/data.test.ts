@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { SITES, type SiteId } from '../src/config/sites';
 import { GUIDES, HEALTH_ITEMS, circadianOffsetHours, healthItem, missionPhase, radiationBudget } from '../src/crew/health';
 import { buildPois, solToDate } from '../src/data/pois';
+import { resolve } from '../src/i18n';
 import { bearingDeg, distanceM, moveBy } from '../src/lib/geo';
 
 const near = (site: SiteId, lon: number, lat: number) => {
@@ -19,7 +20,7 @@ describe('POIs (F4)', () => {
         expect(p.meta.acquiredAt, p.id).toBeTruthy();
         expect(p.meta.retrievedAt, p.id).toBeTruthy();
         expect(['high', 'medium', 'low', 'estimated']).toContain(p.meta.confidence);
-        expect(p.description_es.length).toBeGreaterThan(10);
+        for (const lang of ['en', 'es'] as const) expect(resolve(lang, p.description).length, `${p.id} ${lang}`).toBeGreaterThan(10);
         expect(near(site, p.lonlat[0], p.lonlat[1]), `${p.id} stays near ${site}`).toBe(true);
       }
       expect(new Set(pois.map((p) => p.id)).size).toBe(pois.length);
@@ -42,7 +43,7 @@ describe('health content (F9)', () => {
   it('every item has source, confidence, last_reviewed and applies_to', () => {
     expect(HEALTH_ITEMS.length).toBeGreaterThanOrEqual(16);
     for (const i of HEALTH_ITEMS) {
-      expect(i.source.trim(), i.id).not.toBe('');
+      for (const lang of ['en', 'es'] as const) expect(resolve(lang, i.source).trim(), `${i.id} ${lang}`).not.toBe('');
       expect(['high', 'medium', 'low']).toContain(i.confidence);
       expect(i.last_reviewed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(['transit', 'surface', 'both']).toContain(i.applies_to);
@@ -85,5 +86,36 @@ describe('geo helpers', () => {
       expect(distanceM(a, p)).toBeCloseTo(1000, 0);
       expect(bearingDeg(a, p)).toBeCloseTo(b % 360, 0);
     }
+  });
+});
+
+describe('bilingual content (EN default, ES available)', () => {
+  it('every health item and guide step has non-empty English and Spanish text', () => {
+    for (const i of HEALTH_ITEMS) {
+      for (const lang of ['en', 'es'] as const) {
+        expect(resolve(lang, i.title).trim(), `${i.id} title ${lang}`).not.toBe('');
+        expect(resolve(lang, i.text).trim(), `${i.id} text ${lang}`).not.toBe('');
+        expect(resolve(lang, i.category).trim(), `${i.id} category ${lang}`).not.toBe('');
+      }
+      // The two languages must really differ (a copy-pasted Spanish string would not).
+      expect(resolve('en', i.text), i.id).not.toBe(resolve('es', i.text));
+    }
+    for (const g of GUIDES) {
+      for (const lang of ['en', 'es'] as const) {
+        expect(resolve(lang, g.title).trim(), g.id).not.toBe('');
+        for (const st of g.steps) expect(resolve(lang, st.text).trim(), `${g.id} ${lang}`).not.toBe('');
+      }
+    }
+  });
+
+  it('the default language is English', async () => {
+    const { DEFAULT_LANG } = await import('../src/i18n');
+    expect(DEFAULT_LANG).toBe('en');
+  });
+
+  it('resolve picks the requested side and leaves plain strings alone', () => {
+    expect(resolve('en', { en: 'Hello', es: 'Hola' })).toBe('Hello');
+    expect(resolve('es', { en: 'Hello', es: 'Hola' })).toBe('Hola');
+    expect(resolve('es', 'N/A')).toBe('N/A');
   });
 });

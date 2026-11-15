@@ -1,4 +1,5 @@
 import type { MobilityConfig } from '../config/mobility';
+import type { Bi } from '../i18n';
 import type { Derived } from '../terrain/derive';
 import { cellCenter, type TerrainGrid } from '../terrain/grid';
 import type { Shelter } from '../safety/shelters';
@@ -7,10 +8,25 @@ import type { CostGrid } from './cost';
 
 export type RouteProfile = 'shortest' | 'safe' | 'shelter';
 
-export const PROFILE_INFO: Record<RouteProfile, { label: string; color: string; hint: string }> = {
-  shortest: { label: 'Más corta', color: '#38bdf8', hint: 'Solo evita lo prohibido; ignora el esfuerzo.' },
-  safe: { label: 'Más segura', color: '#4ade80', hint: 'Penaliza fuerte pendientes y rugosidad.' },
-  shelter: { label: 'Con refugio cercano', color: '#fbbf24', hint: 'Prefiere terreno blindado (menor dosis relativa). No garantiza pasar cerca de un refugio: mirá «refugio más lejano» en cada ruta.' },
+export const PROFILE_INFO: Record<RouteProfile, { label: Bi; color: string; hint: Bi }> = {
+  shortest: {
+    label: { en: 'Shortest', es: 'Más corta' },
+    color: '#38bdf8',
+    hint: { en: 'Only avoids forbidden terrain; ignores effort.', es: 'Solo evita lo prohibido; ignora el esfuerzo.' },
+  },
+  safe: {
+    label: { en: 'Safest', es: 'Más segura' },
+    color: '#4ade80',
+    hint: { en: 'Heavily penalises slopes and roughness.', es: 'Penaliza fuerte pendientes y rugosidad.' },
+  },
+  shelter: {
+    label: { en: 'Near a shelter', es: 'Con refugio cercano' },
+    color: '#fbbf24',
+    hint: {
+      en: 'Prefers shielded terrain (lower relative dose). It does not guarantee passing close to a shelter: check "farthest shelter" on each route.',
+      es: 'Prefiere terreno blindado (menor dosis relativa). No garantiza pasar cerca de un refugio: mirá «refugio más lejano» en cada ruta.',
+    },
+  },
 };
 
 export interface RouteStats {

@@ -10,7 +10,7 @@
       "doseMultiplier": 1.3,
       "etaMin": 240,
       "severity": "minor",
-      "title_es": "CME de impacto rasante (menor)"
+      "title": { "en": "CME, glancing blow (minor)", "es": "CME de impacto rasante (menor)" }
     },
     {
       "simulationID": "SAMPLE/moderate/1",
@@ -20,7 +20,7 @@
       "doseMultiplier": 2.5,
       "etaMin": 90,
       "severity": "moderate",
-      "title_es": "CME con impacto menor (moderado)"
+      "title": { "en": "CME, minor impact (moderate)", "es": "CME con impacto menor (moderado)" }
     },
     {
       "simulationID": "SAMPLE/severe/1",
@@ -30,7 +30,7 @@
       "doseMultiplier": 6,
       "etaMin": 35,
       "severity": "severe",
-      "title_es": "CME rápido, impacto directo (severo)"
+      "title": { "en": "Fast CME, direct impact (severe)", "es": "CME rápido, impacto directo (severo)" }
     }
   ]
 }

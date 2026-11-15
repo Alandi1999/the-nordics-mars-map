@@ -4,18 +4,21 @@ import { PROBE_DATE, type DataMeta } from '../lib/dataMeta';
 import { PROFILE_INFO, type Route, type RouteProfile } from '../routing/plan';
 import { COST_COLORS } from '../terrain/render';
 import { DataBadge } from './DataBadge';
+import { useI18n } from '../i18n';
 
 export type PickMode = 'probe' | 'start' | 'end' | 'hazard';
 
 export const ROUTE_META: DataMeta = {
-  source: 'Cálculo A* del equipo sobre terreno ilustrativo',
-  acquiredAt: 'Calculado en el navegador',
+  source: { en: 'Team A* calculation over illustrative terrain', es: 'Cálculo A* del equipo sobre terreno ilustrativo' },
+  acquiredAt: { en: 'Computed in the browser', es: 'Calculado en el navegador' },
   retrievedAt: PROBE_DATE,
   tier: 1,
   confidence: 'estimated',
   shelfLife: 'fast',
-  notes:
-    'Tiempo = distancia × costo de celda ÷ velocidad (supuesto). Riesgo = 70 % por clase de terreno recorrida + 30 % por pendiente máxima. Dosis media: promedio del blindaje estimado a lo largo de la ruta. Ver docs/ROUTING.md.',
+  notes: {
+    en: 'Time = distance × cell cost ÷ speed (assumed). Risk = 70% from the terrain class traversed + 30% from the maximum slope. Mean dose: average of the estimated shielding along the route. See docs/ROUTING.md.',
+    es: 'Tiempo = distancia × costo de celda ÷ velocidad (supuesto). Riesgo = 70 % por clase de terreno recorrida + 30 % por pendiente máxima. Dosis media: promedio del blindaje estimado a lo largo de la ruta. Ver docs/ROUTING.md.',
+  },
 };
 
 const fmtKm = (m: number) => (m >= 1000 ? `${(m / 1000).toFixed(2)} km` : `${Math.round(m)} m`);
@@ -23,6 +26,7 @@ const fmtTime = (min: number) =>
   min >= 60 ? `${Math.floor(min / 60)} h ${Math.round(min % 60)} min` : `${Math.round(min)} min`;
 
 export function ElevationProfile({ route }: { route: Route }) {
+  const { t, l } = useI18n();
   const pts = route.profilePoints;
   const W = 300;
   const H = 110;
@@ -51,7 +55,10 @@ export function ElevationProfile({ route }: { route: Route }) {
       <svg
         viewBox={`0 0 ${W} ${H}`}
         role="img"
-        aria-label={`Perfil de elevación de la ruta ${PROFILE_INFO[route.profile].label}: de ${zMin.toFixed(0)} a ${zMax.toFixed(0)} m en ${fmtKm(total)}`}
+        aria-label={t(
+          `Elevation profile of the ${l(PROFILE_INFO[route.profile].label)} route: from ${zMin.toFixed(0)} to ${zMax.toFixed(0)} m over ${fmtKm(total)}`,
+          `Perfil de elevación de la ruta ${l(PROFILE_INFO[route.profile].label)}: de ${zMin.toFixed(0)} a ${zMax.toFixed(0)} m en ${fmtKm(total)}`,
+        )}
       >
         <path d={area} fill="rgba(255,255,255,0.06)" />
         {segs}
@@ -60,7 +67,7 @@ export function ElevationProfile({ route }: { route: Route }) {
         <text x={pad.l + 2} y={pad.t + 2} className="ax">{zMax.toFixed(0)} m</text>
         <text x={pad.l + 2} y={H - pad.b - 3} className="ax">{zMin.toFixed(0)} m</text>
       </svg>
-      <figcaption className="muted">Color del trazo = clase de terreno (verde cómodo → rojo prohibido).</figcaption>
+      <figcaption className="muted">{t('Stroke color = terrain class (green comfortable → red forbidden).', 'Color del trazo = clase de terreno (verde cómodo → rojo prohibido).')}</figcaption>
     </figure>
   );
 }
@@ -80,29 +87,30 @@ interface Props {
 }
 
 export function RouteSection({ mode, setMode, hasStart, hasEnd, routes, message, selected, onSelect, onExample, onClear, mobility }: Props) {
+  const { t, l } = useI18n();
   const current = routes.find((r) => r.profile === selected) ?? routes[0];
   return (
     <section>
-      <h2>Planificador de ruta</h2>
-      <div className="seg" role="group" aria-label="Elegir puntos">
+      <h2>{t('Route planner', 'Planificador de ruta')}</h2>
+      <div className="seg" role="group" aria-label={t('Pick points', 'Elegir puntos')}>
         <button aria-pressed={mode === 'start'} onClick={() => setMode(mode === 'start' ? 'probe' : 'start')}>
-          {hasStart ? 'Mover inicio A' : 'Elegir inicio A'}
+          {hasStart ? t('Move start A', 'Mover inicio A') : t('Pick start A', 'Elegir inicio A')}
         </button>
         <button aria-pressed={mode === 'end'} onClick={() => setMode(mode === 'end' ? 'probe' : 'end')}>
-          {hasEnd ? 'Mover destino B' : 'Elegir destino B'}
+          {hasEnd ? t('Move destination B', 'Mover destino B') : t('Pick destination B', 'Elegir destino B')}
         </button>
       </div>
       <div className="seg">
-        <button className="plain" onClick={onExample}>Ruta de ejemplo</button>
-        <button className="plain" onClick={onClear} disabled={!hasStart && !hasEnd}>Limpiar</button>
+        <button className="plain" onClick={onExample}>{t('Example route', 'Ruta de ejemplo')}</button>
+        <button className="plain" onClick={onClear} disabled={!hasStart && !hasEnd}>{t('Clear', 'Limpiar')}</button>
       </div>
-      {(mode === 'start' || mode === 'end') && <p className="hint">Hacé clic en el mapa para fijar {mode === 'start' ? 'el inicio' : 'el destino'}.</p>}
+      {(mode === 'start' || mode === 'end') && <p className="hint">{mode === 'start' ? t('Click the map to set the start.', 'Hacé clic en el mapa para fijar el inicio.') : t('Click the map to set the destination.', 'Hacé clic en el mapa para fijar el destino.')}</p>}
       {message && <p className="warnbox" role="status">{message}</p>}
-      {!message && hasStart && hasEnd && routes.length === 0 && <p className="warnbox" role="status">No hay ruta posible con estos umbrales.</p>}
+      {!message && hasStart && hasEnd && routes.length === 0 && <p className="warnbox" role="status">{t('No route is possible with these thresholds.', 'No hay ruta posible con estos umbrales.')}</p>}
 
       {routes.length > 0 && (
         <>
-          <div className="routes" role="radiogroup" aria-label="Rutas">
+          <div className="routes" role="radiogroup" aria-label={t('Routes', 'Rutas')}>
             {routes.map((r) => {
               const info = PROFILE_INFO[r.profile];
               return (
@@ -114,20 +122,20 @@ export function RouteSection({ mode, setMode, hasStart, hasEnd, routes, message,
                   style={{ borderLeftColor: info.color }}
                   onClick={() => onSelect(r.profile)}
                 >
-                  <strong>{info.label}</strong>
+                  <strong>{l(info.label)}</strong>
                   <span>{fmtKm(r.stats.distanceM)} · {fmtTime(r.stats.timeMin)}</span>
-                  <span>pend. máx {r.stats.maxSlopeDeg.toFixed(1)}° · +{Math.round(r.stats.ascentM)} m / −{Math.round(r.stats.descentM)} m</span>
-                  <span>dosis media {r.stats.meanDose.toFixed(2)} (est.){r.stats.maxShelterDistM !== null && ` · refugio más lejano ${fmtKm(r.stats.maxShelterDistM)}`}</span>
+                  <span>{t('max slope', 'pend. máx')} {r.stats.maxSlopeDeg.toFixed(1)}° · +{Math.round(r.stats.ascentM)} m / −{Math.round(r.stats.descentM)} m</span>
+                  <span>{t('mean dose', 'dosis media')} {r.stats.meanDose.toFixed(2)} {t('(est.)', '(est.)')}{r.stats.maxShelterDistM !== null && ` · ${t('farthest shelter', 'refugio más lejano')} ${fmtKm(r.stats.maxShelterDistM)}`}</span>
                   <span className="risk">
-                    Riesgo (estimado) {r.stats.risk}/100
+                    {t('Risk (estimated)', 'Riesgo (estimado)')} {r.stats.risk}/100
                     <i style={{ width: `${r.stats.risk}%` }} />
                   </span>
-                  {r.sameAs && <em>Igual que «{PROFILE_INFO[r.sameAs].label}»</em>}
+                  {r.sameAs && <em>{t(`Same as "${l(PROFILE_INFO[r.sameAs].label)}"`, `Igual que «${l(PROFILE_INFO[r.sameAs].label)}»`)}</em>}
                 </button>
               );
             })}
           </div>
-          <p className="muted">{PROFILE_INFO[current.profile].hint} Velocidad base {mobility.walkSpeedKmh} km/h (supuesto).</p>
+          <p className="muted">{l(PROFILE_INFO[current.profile].hint)} {t(`Base speed ${mobility.walkSpeedKmh} km/h (assumed).`, `Velocidad base ${mobility.walkSpeedKmh} km/h (supuesto).`)}</p>
           <ElevationProfile route={current} />
           <DataBadge meta={ROUTE_META} />
         </>
