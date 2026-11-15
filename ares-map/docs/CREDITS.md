@@ -1,13 +1,15 @@
-# Créditos y fuentes
+# Credits and sources
 
-| Fuente | Uso | Crédito / nota |
+Versión en español: [CREDITS.es.md](CREDITS.es.md)
+
+| Source | Use | Credit / note |
 |---|---|---|
-| NASA Trek · Viking MDIM 2.1 | Imagen base | NASA/JPL-Caltech · USGS Astrogeology. Tiles hasta nivel 7. |
-| USGS Astrogeology WMS | MOLA, relieve HRSC+MOLA, THEMIS día/noche | USGS Astrogeology Science Center; THEMIS: NASA/JPL/ASU; MOLA: NASA/GSFC |
-| NASA MMGIS · `MSL_waypoints.json`, `M20_waypoints.json` | Trayectorias y POIs reales | NASA/JPL-Caltech; descargado el 2026-11-15 |
-| JPL Horizons | Validación de la distancia Tierra–Marte | NASA/JPL Solar System Dynamics |
-| astronomy-engine | Efemérides offline | Don Cross (MIT) |
-| MSL/RAD, Hassler et al., *Science* 343 (2014) | Línea base de dosis en Gale (0,67 mSv/día; 1,8 mSv/día en tránsito) | Media de ago-2012 a jun-2013; no es tiempo real |
-| NASA DONKI | Esquema de las alertas de muestra | Valores ilustrativos; DONKI es experimental |
-| NASA HRP / NTRS, Kanas et al. 2021 | Contenido de salud verificado | Ver `src/crew/health.json`; lo pendiente está etiquetado |
-| OpenLayers | Mapa | BSD-2-Clause |
+| NASA Trek · Viking MDIM 2.1 | Base imagery | NASA/JPL-Caltech · USGS Astrogeology. Tiles up to level 7. |
+| USGS Astrogeology WMS | MOLA, HRSC+MOLA relief, THEMIS day/night | USGS Astrogeology Science Center; THEMIS: NASA/JPL/ASU; MOLA: NASA/GSFC |
+| NASA MMGIS · `MSL_waypoints.json`, `M20_waypoints.json` | Real traverses and POIs | NASA/JPL-Caltech; downloaded 2026-11-15 |
+| JPL Horizons | Validation of the Earth-Mars distance | NASA/JPL Solar System Dynamics |
+| astronomy-engine | Offline ephemeris | Don Cross (MIT) |
+| MSL/RAD, Hassler et al., *Science* 343 (2014) | Dose baseline at Gale (0.67 mSv/day; 1.8 mSv/day in transit) | Mean of Aug 2012 to Jun 2013; not real time |
+| NASA DONKI | Schema of the sample alerts | Illustrative values; DONKI is experimental |
+| NASA HRP / NTRS, Kanas et al. 2021 | Verified health content | See `src/crew/health.json`; anything pending is labelled |
+| OpenLayers | Map | BSD-2-Clause |

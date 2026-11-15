@@ -1,38 +1,42 @@
-# Demo de 3 minutos
+# Three-minute demo
 
-Preparación (una vez, con red):
+Versión en español: [DEMO.es.md](DEMO.es.md)
+
+Setup (once, with a network):
 
 ```
-npm run build && npm run preview     # el service worker solo existe en la versión compilada
+npm run build && npm run preview     # the service worker only exists in the built version
 ```
 
-Abrir la app, pestaña **Mapa** → **Preparar modo offline** (≈ 120 imágenes por sitio). Verificar que diga
-"Service worker: activo".
+Open the app (it starts in English; the **EN / ES** button in the interface switches to Spanish), go to the **Map** tab and use the
+button to prepare offline mode (about 120 images per site). Check that it says "Service worker: active".
+(Note: that button and status line may still show Spanish text: "Preparar modo offline", "activo".)
 
-| Tiempo | Pestaña | Qué mostrar | Frase clave |
+| Time | Tab | What to show | Key line |
 |---|---|---|---|
-| 0:00 | Enlace | Latencia de hoy y el gráfico 2025–2030. Mover el slider «sin respuesta». | «Entre 3 y 22 min por sentido: la Tierra no puede guiar una caminata.» |
-| 0:25 | Mapa / Puntos | Gale con la trayectoria real de Curiosity (hasta sol 5073). Clic en un waypoint: ficha con fuente y fecha. | «Datos reales de NASA; cada dato dice de dónde viene y qué tan confiable es.» |
-| 0:50 | Terreno | Pendiente, mapa de costo; mover los umbrales y ver el mapa recalcularse. Clic para sondear. | «El terreno del AOI es ilustrativo, y la app lo avisa.» |
-| ~0:55 (opcional, 10 s) | Clima | Ciclo de temperatura y presión de un sol y el botón «Ver THEMIS de noche». | «Esta serie es inventada y está marcada; las capas térmicas THEMIS sí son reales.» |
-| 1:15 | Ruta | **Ruta de ejemplo**: tres rutas (corta, segura, con refugio) y su perfil de elevación. | «El mejor camino no siempre es el más corto.» |
-| 1:40 | Seguridad | Activar blindaje; simular un evento. Con A en el extremo SO, **moderado** da CÓDIGO ROJO (ningún refugio llega a tiempo, margen −28 min) y **menor** da verde. Tarjeta: código, cuenta regresiva, refugio y margen. | «Una alerta solar se traduce en una acción concreta.» |
-| 2:05 | Ruta | **Reportar peligro** sobre la ruta; la ruta se recalcula sola. | «Si el terreno cambia, el plan cambia sin esperar a la Tierra.» |
-| 2:25 | Equipo | Sol 30; simular «Fuga en la esclusa». Señalar las etiquetas «pendiente de fuente». | «Decimos qué sabemos y qué falta citar.» |
-| 2:45 | Guante | Vista del guantelete: código, flecha, distancia. Subir el error de posición. | «Esto es el concepto que llevaría la tripulación: solo lo esencial.» |
-| 2:55 | — | Modo avión y recargar. | «Todo sigue funcionando sin red.» |
+| 0:00 | Link | Today's latency and the 2025-2030 chart. Move the "no response" slider. | "Between 3 and 22 min each way: Earth cannot guide a walk." |
+| 0:25 | Map / Points | Gale with Curiosity's real traverse (up to sol 5073). Click a waypoint: card with source and date. | "Real NASA data; every datum says where it comes from and how reliable it is." |
+| 0:50 | Terrain | Slope, cost map; move the thresholds and watch the map recompute. Click to probe. | "The AOI terrain is illustrative, and the app says so." |
+| ~0:55 (optional, 10 s) | Weather | One sol's temperature and pressure cycle and the "View THEMIS nighttime" button. | "This series is invented and labelled; the THEMIS thermal layers are real." |
+| 1:15 | Route | **Example route**: three routes (short, safe, with shelter) and their elevation profile. | "The best path is not always the shortest." |
+| 1:40 | Safety | Turn on shielding; simulate an event. With A at the SW end, **moderate** gives RED CODE (no shelter is reachable in time, margin -28 min) and **minor** gives green. Card: code, countdown, shelter and margin. | "A solar alert becomes a concrete action." |
+| 2:05 | Route | **Report hazard** on the route; the route recomputes by itself. | "If the terrain changes, the plan changes without waiting for Earth." |
+| 2:25 | Crew | Sol 30; simulate "Airlock leak". Point out the "pending source" labels. | "We say what we know and what is still missing a citation." |
+| 2:45 | Glove | Glove view: code, arrow, distance. Raise the position error. | "This is the concept the crew would carry: only the essentials." |
+| 2:55 | — | Airplane mode and reload. | "Everything keeps working without a network." |
 
-## Antes de presentar (checklist)
+## Before presenting (checklist)
 
-- [ ] `npm run build` sin errores y `npm test` en verde.
-- [ ] Versión compilada abierta con `npm run preview`, no `npm run dev`.
-- [ ] «Preparar modo offline» ejecutado en **Gale y Jezero** (cambiar de sitio y repetir).
-- [ ] Probar el modo avión con la pestaña ya cargada, **antes** de subir al escenario.
-- [ ] Decir en voz alta: terreno, alertas, rutas y salud son **ilustrativos o conceptuales**.
+- [ ] `npm run build` without errors and `npm test` green.
+- [ ] Built version open with `npm run preview`, not `npm run dev`.
+- [ ] "Prepare offline mode" run on **both Gale and Jezero** (switch site and repeat).
+- [ ] Test airplane mode with the tab already loaded, **before** going on stage.
+- [ ] Say out loud: terrain, alerts, routes and health are **illustrative or conceptual**.
+- [ ] Choose the interface language (EN / ES button) before starting.
 
-## Lo que NO afirmar
+## What NOT to claim
 
-- El guantelete, el posicionamiento sin GPS y la IA médica son **conceptos**, no tecnología existente.
-- El relieve del AOI no es real; la trayectoria del rover, los waypoints, las efemérides y la línea base RAD sí.
-- Las alertas de clima espacial son una muestra con el esquema de DONKI, no un pronóstico.
-- Los umbrales de movilidad son supuestos del equipo, sin calibrar.
+- The gauntlet, positioning without GPS and medical AI are **concepts**, not existing technology.
+- The AOI relief is not real; the rover traverse, the waypoints, the ephemeris and the RAD baseline are.
+- Space-weather alerts are a sample in the DONKI schema, not a forecast.
+- Mobility thresholds are team assumptions, uncalibrated.

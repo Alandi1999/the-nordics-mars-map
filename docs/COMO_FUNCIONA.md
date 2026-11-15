@@ -241,7 +241,7 @@ Lo que **no** quedó confirmado:
 cd ares-map
 npm install
 npm run dev                         # desarrollo
-npm test                            # 58 tests
+npm test                            # 61 tests
 npm run build && npm run preview    # versión con service worker (modo offline)
 
 # Rust

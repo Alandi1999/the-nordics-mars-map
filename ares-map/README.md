@@ -1,41 +1,45 @@
-# ARES MAP · prototipo conceptual
+# ARES MAP · concept prototype
 
-Mapa de exploración de Marte para una caminata en superficie, hecho para **NASA Space Apps 2026**.
-Es una **demostración de la idea**, no un producto: mezcla datos reales de NASA con datos ilustrativos,
-y cada dato muestra su fuente, fecha y nivel de confianza (insignia «T1 · …» / «ESTIMADO»).
+Versión en español: [README.es.md](README.es.md)
+
+A Mars surface-exploration map for a walk outside the habitat, made for **NASA Space Apps 2026**.
+It is a **demonstration of the idea**, not a product: it mixes real NASA data with illustrative data,
+and every datum shows its source, date and confidence level (badge "T1 · ..." / "ESTIMATED").
+
+The app starts in **English** and has an **EN / ES** button to switch the interface language.
 
 ```
 npm install
-npm run dev        # desarrollo
-npm test           # 58 tests (terreno, rutas, blindaje, efemérides, datos, clima simulado)
-npm run build && npm run preview   # versión con service worker (modo offline)
+npm run dev        # development
+npm test           # 61 tests (terrain, routes, shielding, ephemeris, data, simulated weather)
+npm run build && npm run preview   # build with service worker (offline mode)
 ```
 
-## Qué es real y qué es ilustrativo
+## What is real and what is illustrative
 
-| Real | Ilustrativo / conceptual |
+| Real | Illustrative / conceptual |
 |---|---|
-| Imagen Viking (Trek), MOLA, relieve HRSC+MOLA, THEMIS (USGS) | Relieve del AOI (generado), pendiente, costo, blindaje, refugios |
-| Trayectoria y waypoints de Curiosity (sol 5073) y Perseverance (sol 2022) | Alertas de clima espacial (esquema DONKI, valores inventados) |
-| Distancia y latencia Tierra–Marte (validadas con JPL Horizons) | Tarjeta de protocolo, simulador de eventos, guantelete, IA médica |
-| Línea base de radiación RAD en Gale | Parámetros de movilidad (supuestos sin calibrar) |
-| | Clima de superficie (temperatura y presión): serie inventada, no REMS ni MEDA |
+| Viking image (Trek), MOLA, HRSC+MOLA relief, THEMIS (USGS) | AOI relief (generated), slope, cost, shielding, shelters |
+| Curiosity (sol 5073) and Perseverance (sol 2022) traverses and waypoints | Space-weather alerts (DONKI schema, invented values) |
+| Earth-Mars distance and latency (validated with JPL Horizons) | Protocol card, event simulator, gauntlet, medical AI |
+| RAD radiation baseline at Gale | Mobility parameters (uncalibrated assumptions) |
+| | Surface weather (temperature and pressure): invented series, not REMS or MEDA |
 
-Los datos de un sitio nunca se muestran sobre el otro.
+Data from one site is never shown on the other.
 
-## Estructura
+## Structure
 
-- `src/terrain`, `src/routing`, `src/safety`, `src/crew`: lógica pura, con tests en `tests/`.
-- `src/ui`, `src/map`, `src/App.tsx`: interfaz.
-- `src/data`: trayectorias reales (`scripts/build_rover_data.mjs`) y muestra de alertas.
-- `docs/`: `DATA_NOTES.md` (endpoints probados), `ROUTING.md` (fórmulas), `DEMO.md`, `CREDITS.md`.
-- Especificación: `../ARES_MAP_SPEC.md`.
+- `src/terrain`, `src/routing`, `src/safety`, `src/crew`: pure logic, with tests in `tests/`.
+- `src/ui`, `src/map`, `src/App.tsx`: interface.
+- `src/data`: real traverses (`scripts/build_rover_data.mjs`) and the alert sample.
+- `docs/`: `DATA_NOTES.md` (probed endpoints), `ROUTING.md` (formulas), `DEMO.md`, `CREDITS.md`.
+- Specification: `../ARES_MAP_SPEC.md`.
 
-## Límites conocidos
+## Known limits
 
-- El relieve del AOI es sintético; la trayectoria real se dibuja sobre él (hay un aviso en pantalla).
-- Sin calibración con Jezero: los umbrales de movilidad figuran como «supuestos sin validar».
-- Trek solo tiene tiles hasta el nivel 7 (≈ 325 m/px): la imagen base es borrosa a escala de caminata.
-- Contenido de salud: varias entradas siguen «pendientes de fuente» y están etiquetadas así.
-- El panel de clima (F3) usa una serie inventada, marcada «ESTIMADO»; no hay datos de REMS ni de MEDA.
-- El proyecto usa npm (`package-lock.json`); un `pnpm-lock.yaml` local está ignorado en git.
+- The AOI relief is synthetic; the real traverse is drawn on top of it (an on-screen notice says so).
+- No calibration against Jezero: mobility thresholds are shown as "unvalidated assumptions".
+- Trek only has tiles up to level 7 (about 325 m/px): the base image is blurry at walking scale.
+- Health content: several entries are still "pending source" and are labelled as such.
+- The weather panel (F3) uses an invented series, marked "ESTIMATED"; there is no REMS or MEDA data.
+- The project uses npm (`package-lock.json`); a local `pnpm-lock.yaml` is git-ignored.
